@@ -1,6 +1,6 @@
 <?php
 
-namespace ExampleProject;
+namespace SiteAlias;
 
 use PHPUnit\Framework\TestCase;
 

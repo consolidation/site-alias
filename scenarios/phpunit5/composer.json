@@ -10,12 +10,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "SiteAlias\\": "src"
+            "Consolidation\\SiteAlias\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SiteAlias\\": "tests/src"
+            "Consolidation\\SiteAlias\\": "tests/src"
         }
     },
     "require": {
@@ -31,7 +31,8 @@
         "phpunit/phpunit": "^5.7.27",
         "satooshi/php-coveralls": "^2",
         "squizlabs/php_codesniffer": "^2.8",
-        "symfony/console": "^2.8|^3|^4"
+        "symfony/console": "^2.8|^3|^4",
+        "symfony/yaml": "~2.3|^3"
     },
     "scripts": {
         "phar:install-tools": [

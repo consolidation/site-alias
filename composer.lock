@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48a7f2dc2aebb7d6a8eb5dbd7a660cdd",
+    "content-hash": "4e9b869be2aa1b0f14880890eac3df62",
     "packages": [
         {
             "name": "symfony/filesystem",

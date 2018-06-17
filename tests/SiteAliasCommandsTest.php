@@ -1,6 +1,6 @@
 <?php
 
-namespace SiteAlias;
+namespace Consolidation\SiteAlias;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -25,7 +25,7 @@ class ExampleCommandsTest extends TestCase
     public function setUp()
     {
         // Store the command classes we are going to test
-        $this->commandClasses = [ \SiteAlias\Cli\ExampleCommands::class ];
+        $this->commandClasses = [ \Consolidation\SiteAlias\Cli\SiteAliasCommands::class ];
 
         // Define our invariants for our test
         $this->appName = 'TestFixtureApp';
@@ -43,19 +43,15 @@ class ExampleCommandsTest extends TestCase
         return [
 
             [
-                '2 times 2 is 4', self::STATUS_OK,
-                'multiply', 2, 2,
+                'loading from /fixtures/sitealiases/single', self::STATUS_ERROR,
+                'site:list', '/fixtures/sitealiases/single',
             ],
 
             [
-                'Multiply two numbers together', self::STATUS_OK,
+                'List available site aliases', self::STATUS_OK,
                 'list',
             ],
 
-            [
-                'Not enough arguments (missing: "b").', self::STATUS_ERROR,
-                'multiply', 7,
-            ],
         ];
     }
 
@@ -87,6 +83,8 @@ class ExampleCommandsTest extends TestCase
         array_shift($argv);
         array_shift($argv);
         array_unshift($argv, $this->appName);
+
+        // TODO: replace paths beginning with '/fixtures' with actual path to fixture data
 
         return $argv;
     }

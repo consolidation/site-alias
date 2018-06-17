@@ -10,12 +10,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "SiteAlias\\": "src"
+            "Consolidation\\SiteAlias\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SiteAlias\\": "tests/src"
+            "Consolidation\\SiteAlias\\": "tests/src"
         }
     },
     "require": {
@@ -24,6 +24,7 @@
         "symfony/filesystem": "^2.8|^3|^4"
     },
     "require-dev": {
+        "symfony/yaml": "~2.3|^3",
         "consolidation/Robo": "^1.2.3",
         "symfony/console": "^2.8|^3|^4",
         "knplabs/github-api": "^2.7",

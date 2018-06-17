@@ -208,7 +208,7 @@ class SiteSpecParser
         // instances where we need to allow 'uri' to be a literal uri
         // rather than the folder name? If so, we need to loosen this check.
         // I think it's fine as it is, though.
-        $path = $result['root'] . '/sites/' . $result['uri'];
+        $path = $result['root'] . DIRECTORY_SEPARATOR . 'sites' . DIRECTORY_SEPARATOR . $result['uri'];
         if (!is_dir($path)) {
             return [];
         }

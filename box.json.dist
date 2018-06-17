@@ -1,0 +1,25 @@
+{
+  "alias": "example.phar",
+  "chmod": "0755",
+  "compactors": [],
+  "directories": ["src"],
+  "files": ["example", "README.md", "VERSION"],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        "test",
+        "tests",
+        "Test",
+        "Tests",
+        "Tester"
+      ],
+      "in": "vendor"
+    }
+  ],
+  "git-commit": "git-commit",
+  "git-version": "git-version",
+  "output": "example.phar",
+  "main": "example",
+  "stub": true
+}

@@ -1,0 +1,41 @@
+dist: trusty
+language: php
+
+branches:
+  # Only test the master branch and SemVer tags.
+  only:
+    - master
+    - /^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+.*$/
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.2
+      env: 'DEPENCENCIES=highest'
+    - php: 7.2
+    - php: 7.1
+    - php: 7.0.11
+    - php: 5.6
+      env: 'SCENARIO=phpunit5'
+    - php: 5.6
+      env: 'SCENARIO=phpunit5 DEPENDENCIES=lowest'
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - 'composer scenario "${SCENARIO}" "${DEPENDENCIES}"'
+
+script:
+  - composer test
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v
+
+before_deploy:
+  - composer phar:install-tools
+  - composer install --prefer-dist --no-dev --no-interaction
+  - php box.phar build

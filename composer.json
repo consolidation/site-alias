@@ -1,0 +1,82 @@
+{
+    "name": "g1a/starter",
+    "description": "Template project for PHP libraries.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Greg Anderson",
+            "email": "greg.1.anderson@greenknowe.org"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "CustomizeProject\\": "customize",
+            "ExampleProject\\": "src"
+        }
+    },
+    "autoload-dev":{
+        "psr-4":{
+            "ExampleProject\\": "tests/src"
+        }
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/finder": "^2.8|^3|^4",
+        "symfony/filesystem": "^2.8|^3|^4"
+    },
+    "require-dev": {
+        "consolidation/Robo": "^1.2.3",
+        "symfony/console": "^2.8|^3|^4",
+        "knplabs/github-api": "^2.7",
+        "php-http/guzzle6-adapter": "^1.1",
+        "phpunit/phpunit": "^5",
+        "g1a/composer-test-scenarios": "^2",
+        "satooshi/php-coveralls": "^2",
+        "squizlabs/php_codesniffer": "^2.8"
+    },
+    "scripts": {
+        "customize": [
+            "CustomizeProject\\Customizer::customize"
+        ],
+        "phar:install-tools": [
+            "gem install mime-types -v 2.6.2",
+            "curl -LSs https://box-project.github.io/box2/installer.php | php"
+        ],
+        "phar:build": "box build",
+        "cs": "phpcs --standard=PSR2 -n src",
+        "cbf": "phpcbf --standard=PSR2 -n src",
+        "unit": "phpunit --colors=always",
+        "lint": [
+            "find src -name '*.php' -print0 | xargs -0 -n1 php -l",
+            "find tests/src -name '*.php' -print0 | xargs -0 -n1 php -l"
+        ],
+        "test": [
+            "@lint",
+            "@unit",
+            "@cs"
+        ],
+        "release": [
+            "( echo && echo 'Ensure that VERSION file contains the version to release.' && echo \"Current version: $(cat VERSION)\" && tag=$(cat VERSION) && git tag \"$tag\" && git push origin \"$tag\" )"
+        ],
+        "scenario": "scenarios/install",
+        "post-create-project-cmd": [
+            "@customize"
+        ],
+        "post-update-cmd": [
+            "create-scenario phpunit5 'phpunit/phpunit:^5.7.27' --platform-php '5.6.33'",
+            "dependency-licenses"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "platform": {
+            "php": "7.0.8"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}

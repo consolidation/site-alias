@@ -16,7 +16,7 @@ class SiteAliasCommands extends \Robo\Tasks
      * @format yaml
      * @return array
      */
-    public function list($dir)
+    public function siteList($dir)
     {
         $this->aliasLoader = new SiteAliasFileLoader();
         $ymlLoader = new YamlDataFileLoader();

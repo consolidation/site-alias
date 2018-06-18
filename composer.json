@@ -10,7 +10,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Consolidation\\SiteAlias\\": "src"
+            "Consolidation\\SiteAlias\\": "src",
+            "Drush\\SiteAlias\\": "legacy"
         }
     },
     "autoload-dev": {

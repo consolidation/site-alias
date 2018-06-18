@@ -21,7 +21,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 DEPENDENCY LICENSES:
 
-Name                    Version  License  
-symfony/filesystem      v3.4.11  MIT      
-symfony/finder          v3.4.11  MIT      
-symfony/polyfill-ctype  v1.8.0   MIT      
+Name  Version  License  

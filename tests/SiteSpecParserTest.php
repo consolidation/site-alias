@@ -22,6 +22,9 @@ class SiteSpecParserTest extends TestCase
         // actual path to our fixture site.
         $spec = preg_replace('%^/fixtures%', $root, $spec);
 
+        // Make sure that our spec is valid
+        $this->assertTrue($parser->validSiteSpec($spec));
+
         // Parse it!
         $result = $parser->parse($spec, $root);
 

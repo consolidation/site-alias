@@ -77,7 +77,7 @@ class SiteSpecParser
      */
     protected function patterns()
     {
-        $PATH = '(/[^#]*)';
+        $PATH = '([a-zA-Z]:[/\\\\][^#]*|[/\\\\][^#]*)';
         $USER = '([a-zA-Z0-9\._-]+)';
         $SERVER = '([a-zA-Z0-9\._-]+)';
         $URI = '([a-zA-Z0-9_-]+)';

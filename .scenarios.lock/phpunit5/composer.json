@@ -15,7 +15,7 @@
     "autoload": {
         "psr-4": {
             "Consolidation\\SiteAlias\\": "src",
-            "Drush\\SiteAlias\\": "legacy"
+            "Drush\\SiteAlias\\": "src/legacy"
         }
     },
     "autoload-dev": {
@@ -58,7 +58,7 @@
         "release": [
             "( echo && echo 'Ensure that VERSION file contains the version to release.' && echo \"Current version: $(cat VERSION)\" && tag=$(cat VERSION) && git tag \"$tag\" && git push origin \"$tag\" )"
         ],
-        "scenario": "scenarios/install",
+        "scenario": ".scenarios.lock/install",
         "post-update-cmd": [
             "create-scenario phpunit5 'phpunit/phpunit:^5.7.27' --platform-php '5.6.33'",
             "dependency-licenses"

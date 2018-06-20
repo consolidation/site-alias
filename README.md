@@ -61,6 +61,23 @@ dev:
 
 As previously mentioned, an alias in the form of `@<env>` is interpreted as `@self.<env>`. This allows sites to define a `self.site.yml` file that contains common aliases shared among a team--for example, `@stage` and `@live`.
 
+## Site specifications
+
+Site specifications are specially-crafted commandline arguments that can serve as replacements for simple site aliases. Site specifications are particularly useful for scripts that may wish to operate on a remote site without generating a temporary alias file.
+
+The basic form for a site specification is:
+```
+user.name@example.com/path#uri
+```
+This is equivalent to the following alias record:
+```
+env:
+  user: user.name
+  host: example.com
+  root: /path
+  uri: somemultisite
+```
+
 ## Getting Started
 
 To get started contributing to this project, simply clone it locally and then run `composer install`.

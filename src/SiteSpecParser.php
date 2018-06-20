@@ -13,6 +13,12 @@ namespace Consolidation\SiteAlias;
 class SiteSpecParser
 {
     /**
+     * @var string Relative path from the site root to directory where
+     * multisite configuration directories are found.
+     */
+    protected $multisiteDirectoryRoot = 'sites';
+
+    /**
      * Parse a site specification
      *
      * @param string $spec
@@ -64,6 +70,16 @@ class SiteSpecParser
     public function isAliasName($aliasName)
     {
         return !empty($aliasName) && ($aliasName[0] == '@');
+    }
+
+    public function setMultisiteDirectoryRoot($location)
+    {
+        $this->multisiteDirectoryRoot = $location;
+    }
+
+    public function getMultisiteDirectoryRoot($root)
+    {
+        return $root . DIRECTORY_SEPARATOR . $this->multisiteDirectoryRoot;
     }
 
     /**
@@ -202,13 +218,13 @@ class SiteSpecParser
             $result['root'] = $root;
         }
 
-        // TODO: If using a sitespec `#uri`, then `uri` MUST
+        // If using a sitespec `#uri`, then `uri` MUST
         // be the name of a folder that exists in __DRUPAL_ROOT__/sites.
         // This restriction does NOT apply to the --uri option. Are there
         // instances where we need to allow 'uri' to be a literal uri
         // rather than the folder name? If so, we need to loosen this check.
         // I think it's fine as it is, though.
-        $path = $result['root'] . DIRECTORY_SEPARATOR . 'sites' . DIRECTORY_SEPARATOR . $result['uri'];
+        $path = $this->getMultisiteDirectoryRoot($result['root']) . DIRECTORY_SEPARATOR . $result['uri'];
         if (!is_dir($path)) {
             return [];
         }

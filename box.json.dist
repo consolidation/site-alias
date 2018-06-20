@@ -1,9 +1,9 @@
 {
-  "alias": "example.phar",
+  "alias": "alias-tool.phar",
   "chmod": "0755",
   "compactors": [],
   "directories": ["src"],
-  "files": ["example", "README.md", "VERSION"],
+  "files": ["alias-tool", "README.md", "VERSION"],
   "finder": [
     {
       "name": "*.php",
@@ -19,7 +19,7 @@
   ],
   "git-commit": "git-commit",
   "git-version": "git-version",
-  "output": "example.phar",
-  "main": "example",
+  "output": "alias-tool.phar",
+  "main": "alias-tool",
   "stub": true
 }

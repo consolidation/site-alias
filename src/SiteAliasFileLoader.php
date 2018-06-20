@@ -91,9 +91,13 @@ class SiteAliasFileLoader
             return false;
         }
 
-        // If $aliasName was provided as `@foo` and defaulted to `@self.foo`,
-        // then make a new alias name `@foo.default` and see if we can find that.
-        // Note that at the moment, `foo` is stored in $aliasName->env().
+        // If $aliasName was provided as `@foo` (`hasSitename()` returned `false`
+        // above), then this was interpreted as `@self.foo` when we searched
+        // above. If we could not find an alias record for `@self.foo`, then we
+        // will try to search again, this time with the assumption that `@foo`
+        // might be `@foo.<default>`, where `<default>` is the default
+        // environment for the specified site. Note that in this instance, the
+        // sitename will be found in $aliasName->env().
         $sitename = $aliasName->env();
         return $this->loadDefaultEnvFromSitename($sitename);
     }

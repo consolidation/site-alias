@@ -43,7 +43,7 @@ class ExampleCommandsTest extends TestCase
         return [
 
             [
-                'loading from /fixtures/sitealiases/single', self::STATUS_ERROR,
+                'Add search location: /fixtures/sitealiases/single', self::STATUS_ERROR,
                 'site:list', '/fixtures/sitealiases/single',
             ],
 

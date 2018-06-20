@@ -6,6 +6,10 @@
         {
             "name": "Greg Anderson",
             "email": "greg.1.anderson@greenknowe.org"
+        },
+        {
+            "name": "Moshe Weitzman",
+            "email": "weitzman@tejasa.com"
         }
     ],
     "autoload": {

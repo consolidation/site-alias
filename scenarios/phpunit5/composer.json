@@ -6,11 +6,16 @@
         {
             "name": "Greg Anderson",
             "email": "greg.1.anderson@greenknowe.org"
+        },
+        {
+            "name": "Moshe Weitzman",
+            "email": "weitzman@tejasa.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Consolidation\\SiteAlias\\": "src"
+            "Consolidation\\SiteAlias\\": "src",
+            "Drush\\SiteAlias\\": "legacy"
         }
     },
     "autoload-dev": {
@@ -65,7 +70,7 @@
         "platform": {
             "php": "5.6.33"
         },
-        "vendor-dir": "../../vendor"
+        "vendor-dir": "vendor"
     },
     "extra": {
         "branch-alias": {

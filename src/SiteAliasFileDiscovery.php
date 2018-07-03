@@ -170,28 +170,6 @@ class SiteAliasFileDiscovery
         return $result;
     }
 
-    /**
-     * Return a list of all alias files with the specified extension.
-     *
-     * @param string $filenameExensions
-     * @return string[]
-     */
-    protected function searchForAliasFilesKeyedByBasenamePrefix($filenameExensions)
-    {
-        if (empty($this->searchLocations)) {
-            return [];
-        }
-        $searchPattern = '*' . $filenameExensions;
-        $finder = $this->createFinder($searchPattern);
-        $result = [];
-        foreach ($finder as $file) {
-            $path = $file->getRealPath();
-            $key = $this->extractKey($file->getBasename(), $filenameExensions);
-            $result[$key] = $path;
-        }
-        return $result;
-    }
-
     // TODO: Seems like this could just be basename()
     protected function extractKey($basename, $filenameExensions)
     {

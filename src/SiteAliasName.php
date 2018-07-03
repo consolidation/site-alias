@@ -76,10 +76,11 @@ class SiteAliasName
      *
      * @param string $sitename The alias name for the site.
      * @param string $env The name for the site's environment.
+     * @param string $location The location filter for the site.
      */
-    public function __construct($sitename = null, $env = null)
+    public function __construct($sitename = null, $env = null, $location = null)
     {
-        $this->location = null;
+        $this->location = $location;
         $this->sitename = $sitename;
         $this->env = $env;
     }
@@ -125,7 +126,25 @@ class SiteAliasName
      */
     public function sitename()
     {
-        return empty($this->sitename) ? 'self' : $this->sitename;
+        if (empty($this->sitename)) {
+            return 'self';
+        }
+        return $this->sitename;
+    }
+
+    /**
+     * Return the sitename portion of the alias name. By definition,
+     * every alias must have a sitename. If the site name is implicit,
+     * then 'self' is assumed.
+     *
+     * @return string
+     */
+    public function sitenameWithLocation()
+    {
+        if (empty($this->sitename)) {
+            return 'self';
+        }
+        return (empty($this->location) ? '' : $this->location . '.') . $this->sitename;
     }
 
     /**

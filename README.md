@@ -14,10 +14,16 @@ This project provides the implementation for Drush site aliases. It is used in D
 
 ### Alias naming conventions
 
-Site alias names always begin with a `@`, and typically are divided in two parts: the site name, and the environment name, each separated by a dot. Neither a site name not an enviornment name may contain a dot. An example alias that referenced the `dev` envionment of the site `example` might therefore look something like:
+Site alias names always begin with a `@`, and typically are divided in three parts: the alias file location (optional), the site name, and the environment name, each separated by a dot. None of these names may contain a dot. An example alias that referenced the `dev` envionment of the site `example` in the `myisp` directory might therefore look something like:
+```
+@myisp.example.dev
+``` 
+The location name is optional. If specified, it will only consider alias files located in directories with the same name as the provided location name. The remainder of the path is immaterial; only the directory that is the immediate parent of the site alias file is relevant. The location name may be omitted, e.g.:
 ```
 @example.dev
-``` 
+```
+If the location is not specified, then the alias manaager will search all locations for an applicable site alias file.
+
 It is also possible to use single-word aliases. These can sometimes be ambiguous; the site alias manager will resolve single-word aliases as follows:
 
 1. `@self` is interpreted to mean the site that has already been selected, or the site that would be selected in the absence of any alias.

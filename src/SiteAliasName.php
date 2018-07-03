@@ -10,8 +10,9 @@ namespace Consolidation\SiteAlias;
  *   - @sitename.env: List only sitename and environment.
  *
  *   - @location.sitename.env: List only sitename and environment. Search
- *       only those paths where the basename matches 'location'. Location terms
- *       may only be used when both the sitename and env are also provided.
+ *       only those paths where the name of the folder holding the alias
+ *       files matches 'location'. Location terms may only be used when both
+ *       the sitename and env are also provided.
  *
  *   - @env: Look up a named environment in instances where the site root
  *       is known (e.g. via cwd). In this form, there is an implicit sitename
@@ -69,6 +70,25 @@ class SiteAliasName
         $aliasName = new self();
         $aliasName->doParse($item);
         return $aliasName;
+    }
+
+    /**
+     * The 'location' of an alias file is defined as being the name
+     * of the immediate parent of the alias file.  e.g. the path
+     * '$HOME/.drush/sites/isp/mysite.site.yml' would have a location
+     * of 'isp' and a sitename of 'mysite'. The environments of the site
+     * are defined by the alias contents.
+     *
+     * @param type $path
+     * @return type
+     */
+    public static function locationFromPath($path)
+    {
+        $location = ltrim(basename(dirname($path)), '.');
+        if (($location === 'sites') || ($location === 'drush')) {
+            return '';
+        }
+        return $location;
     }
 
     /**

@@ -91,11 +91,23 @@ class SiteAliasFileDiscovery
      * of the specified search locations.
      *
      * @param string $siteName
+     * @return string[]
+     */
+    public function find($siteName)
+    {
+        return $this->searchForAliasFiles("$siteName.site.yml");
+    }
+
+    /**
+     * Find an alias file SITENAME.site.yml in one
+     * of the specified search locations.
+     *
+     * @param string $siteName
      * @return string|bool
      */
     public function findSingleSiteAliasFile($siteName)
     {
-        $matches = $this->searchForAliasFiles("$siteName.site.yml");
+        $matches = $this->find($siteName);
         if (empty($matches)) {
             return false;
         }
@@ -160,10 +172,11 @@ class SiteAliasFileDiscovery
             $path = $file->getRealPath();
             $result[] = $path;
         }
-        // In theory we can use $finder->path() instead. That didn't work well, though.
+        // In theory we can use $finder->path() instead. That didn't work well,
+        // in practice, though; had trouble correctly escaping the path separators.
         if (!empty($this->locationFilter)) {
             $result = array_filter($result, function ($path) {
-                return basename(dirname($path)) === $this->locationFilter;
+                return SiteAliasName::locationFromPath($path) === $this->locationFilter;
             });
         }
 

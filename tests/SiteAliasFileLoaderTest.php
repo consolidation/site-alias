@@ -19,7 +19,7 @@ class SiteAliasFileLoaderTest extends TestCase
 
     public function testLoadSingleAliasFile()
     {
-        $siteAliasFixtures = $this->fixturesDir() . '/sitealiases/single';
+        $siteAliasFixtures = $this->fixturesDir() . '/sitealiases/sites';
         $this->assertTrue(is_dir($siteAliasFixtures));
         $this->assertTrue(is_file($siteAliasFixtures . '/simple.site.yml'));
         $this->assertTrue(is_file($siteAliasFixtures . '/single.site.yml'));
@@ -78,7 +78,7 @@ class SiteAliasFileLoaderTest extends TestCase
 
     public function testLoad()
     {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');
 
         // Look for a simple alias with no environments defined
         $name = new SiteAliasName('simple');
@@ -113,7 +113,7 @@ class SiteAliasFileLoaderTest extends TestCase
 
     public function testLoadAll()
     {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $all = $this->sut->loadAll();
@@ -122,16 +122,16 @@ class SiteAliasFileLoaderTest extends TestCase
 
     public function testLoadMultiple()
     {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $aliases = $this->sut->loadMultiple('single');
-        $this->assertEquals('@single.dev,@single.alternate,@single.common', implode(',', array_keys($aliases)));
+        $this->assertEquals('@single.dev,@single.alternate,@single.common,@other.single.dev,@other.single.other,@other.single.common', implode(',', array_keys($aliases)));
     }
 
     public function testLoadLocation()
     {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $aliases = $this->sut->loadLocation('other');

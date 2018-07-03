@@ -283,8 +283,9 @@ class SiteAliasFileLoader
     protected function loadSingleSiteAliasFileAtPath($path)
     {
         $sitename = $this->siteNameFromPath($path);
+        $location = SiteAliasName::locationFromPath($path);
         if ($siteData = $this->loadSiteDataFromPath($path)) {
-            return $this->createAliasRecordsFromSiteData($sitename, $siteData);
+            return $this->createAliasRecordsFromSiteData($sitename, $siteData, $location);
         }
         return false;
     }

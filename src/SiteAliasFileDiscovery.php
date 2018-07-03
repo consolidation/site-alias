@@ -22,8 +22,16 @@ use Symfony\Component\Finder\Finder;
  */
 class SiteAliasFileDiscovery
 {
-    protected $searchLocations = [];
-    protected $depth = '<= 1';
+    protected $searchLocations;
+    protected $locationFilter;
+    protected $depth;
+
+    public function __construct($searchLocations = [], $depth = '<= 1', $locationFilter = null)
+    {
+        $this->locationFilter = $locationFilter;
+        $this->searchLocations = $searchLocations;
+        $this->depth = $depth;
+    }
 
     /**
      * Add a location that alias files may be found.
@@ -48,6 +56,10 @@ class SiteAliasFileDiscovery
         return $this->searchLocations;
     }
 
+    public function locationFilter()
+    {
+        return $this->locationFilter;
+    }
 
     /**
      * Set the search depth for finding alias files
@@ -59,6 +71,19 @@ class SiteAliasFileDiscovery
     {
         $this->depth = $depth;
         return $this;
+    }
+
+    /**
+     * Only search for aliases that are in alias files stored in directories
+     * whose basename or key matches the specified location.
+     */
+    public function filterByLocation($location)
+    {
+        if (empty($location)) {
+            return $this;
+        }
+
+        return new SiteAliasFileDiscovery($this->searchLocations(), $this->depth, $location);
     }
 
     /**
@@ -135,6 +160,13 @@ class SiteAliasFileDiscovery
             $path = $file->getRealPath();
             $result[] = $path;
         }
+        // In theory we can use $finder->path() instead. That didn't work well, though.
+        if (!empty($this->locationFilter)) {
+            $result = array_filter($result, function ($path) {
+                return basename(dirname($path)) === $this->locationFilter;
+            });
+        }
+
         return $result;
     }
 

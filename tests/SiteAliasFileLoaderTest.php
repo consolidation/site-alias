@@ -26,6 +26,11 @@ class SiteAliasFileLoaderTest extends TestCase
 
         $this->sut->addSearchLocation($siteAliasFixtures);
 
+        // Add a secondary location
+        $siteAliasFixtures = $this->fixturesDir() . '/sitealiases/other';
+        $this->assertTrue(is_dir($siteAliasFixtures));
+        $this->sut->addSearchLocation($siteAliasFixtures);
+
         // Look for a simple alias with no environments defined
         $name = new SiteAliasName('simple');
         $this->assertEquals('simple', $name->sitename());
@@ -42,14 +47,26 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->assertEquals('bar', $result->get('foo'));
 
         // Same test, but with environment explicitly requested.
-        $name = new SiteAliasName('single', 'alternate');
+        $name = SiteAliasName::parse('@single.alternate');
         $result = $this->callProtected('loadSingleAliasFile', [$name]);
         $this->assertTrue($result instanceof AliasRecord);
         $this->assertEquals('/alternate/path/to/single', $result->get('root'));
         $this->assertEquals('bar', $result->get('foo'));
 
+        // Same test, but with location explicitly filtered.
+        $name = SiteAliasName::parse('@other.single.dev');
+        $result = $this->callProtected('loadSingleAliasFile', [$name]);
+        $this->assertTrue($result instanceof AliasRecord);
+        $this->assertEquals('/other/path/to/single', $result->get('root'));
+        $this->assertEquals('baz', $result->get('foo'));
+
         // Try to fetch an alias that does not exist.
-        $name = new SiteAliasName('missing');
+        $name = SiteAliasName::parse('@missing');
+        $result = $this->callProtected('loadSingleAliasFile', [$name]);
+        $this->assertFalse($result);
+
+        // Try to fetch an alias using a missing location
+        $name = SiteAliasName::parse('@missing.single.alternate');
         $result = $this->callProtected('loadSingleAliasFile', [$name]);
         $this->assertFalse($result);
     }
@@ -62,7 +79,6 @@ class SiteAliasFileLoaderTest extends TestCase
     public function testLoad()
     {
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/group');
 
         // Look for a simple alias with no environments defined
         $name = new SiteAliasName('simple');
@@ -98,8 +114,9 @@ class SiteAliasFileLoaderTest extends TestCase
     public function testLoadAll()
     {
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $all = $this->sut->loadAll();
-        $this->assertEquals('@single.alternate,@single.common,@single.dev', implode(',', array_keys($all)));
+        $this->assertEquals('@single.alternate,@single.common,@single.dev,@single.other', implode(',', array_keys($all)));
     }
 }

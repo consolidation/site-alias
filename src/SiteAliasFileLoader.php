@@ -223,7 +223,8 @@ class SiteAliasFileLoader
 
     /**
      * If the alias name is '@sitename', or if it is '@sitename.env', then
-     * look for a sitename.site.yml file that contains it.
+     * look for a sitename.site.yml file that contains it. We also handle
+     * '@location.sitename.env' here as well.
      *
      * @param SiteAliasName $aliasName
      *
@@ -233,7 +234,9 @@ class SiteAliasFileLoader
     {
         // Check to see if the appropriate sitename.alias.yml file can be
         // found. Return if it cannot.
-        $path = $this->discovery()->findSingleSiteAliasFile($aliasName->sitename());
+        $path = $this->discovery()
+            ->filterByLocation($aliasName->location())
+            ->findSingleSiteAliasFile($aliasName->sitename());
         if (!$path) {
             return false;
         }

@@ -15,16 +15,16 @@ class SiteAliasFileDiscoveryTest extends TestCase
 
     public function testSearchForSingleAliasFile()
     {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');
 
         $path = $this->sut->findSingleSiteAliasFile('single');
-        $this->assertLocation('single', $path);
+        $this->assertLocation('sites', $path);
         $this->assertBasename('single.site.yml', $path);
     }
 
     public function testSearchForMissingSingleAliasFile()
     {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/single');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');
 
         $path = $this->sut->findSingleSiteAliasFile('missing');
         $this->assertFalse($path);

@@ -9,6 +9,11 @@ namespace Consolidation\SiteAlias;
  *
  *   - @sitename.env: List only sitename and environment.
  *
+ *   - @location.sitename.env: List only sitename and environment. Search
+ *       only those paths where the name of the folder holding the alias
+ *       files matches 'location'. Location terms may only be used when both
+ *       the sitename and env are also provided.
+ *
  *   - @env: Look up a named environment in instances where the site root
  *       is known (e.g. via cwd). In this form, there is an implicit sitename
  *       'self' which is replaced by the actual site alias name once known.
@@ -17,7 +22,8 @@ namespace Consolidation\SiteAlias;
  *       or 'dev' if there is no 'default' (or whatever is there if there is
  *       only one). With this form, the site alias name has no environment
  *       until the appropriate default environment is looked up. This form
- *       is checked only after `@env` returns no matches.
+ *       is checked only after `@env` returns no matches. This form can NOT
+ *       be filtered with a `location.` term.
  *
  * There are also two special aliases that are recognized:
  *
@@ -44,13 +50,14 @@ namespace Consolidation\SiteAlias;
  */
 class SiteAliasName
 {
+    protected $location;
     protected $sitename;
     protected $env;
 
     /**
      * Match the parts of a regex name.
      */
-    const ALIAS_NAME_REGEX = '%^@?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)?$%';
+    const ALIAS_NAME_REGEX = '%^@?([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)?(\.[a-zA-Z0-9_-]+)?$%';
 
     /**
      * Create a new site alias name
@@ -66,13 +73,34 @@ class SiteAliasName
     }
 
     /**
+     * The 'location' of an alias file is defined as being the name
+     * of the immediate parent of the alias file.  e.g. the path
+     * '$HOME/.drush/sites/isp/mysite.site.yml' would have a location
+     * of 'isp' and a sitename of 'mysite'. The environments of the site
+     * are defined by the alias contents.
+     *
+     * @param type $path
+     * @return type
+     */
+    public static function locationFromPath($path)
+    {
+        $location = ltrim(basename(dirname($path)), '.');
+        if (($location === 'sites') || ($location === 'drush')) {
+            return '';
+        }
+        return $location;
+    }
+
+    /**
      * Creae a SiteAliasName object from an alias name string.
      *
      * @param string $sitename The alias name for the site.
      * @param string $env The name for the site's environment.
+     * @param string $location The location filter for the site.
      */
-    public function __construct($sitename = null, $env = null)
+    public function __construct($sitename = null, $env = null, $location = null)
     {
+        $this->location = $location;
         $this->sitename = $sitename;
         $this->env = $env;
     }
@@ -85,6 +113,9 @@ class SiteAliasName
     public function __toString()
     {
         $parts = [ $this->sitename() ];
+        if ($this->hasLocation()) {
+            array_unshift($parts, $this->location());
+        }
         if ($this->hasEnv()) {
             $parts[] = $this->env();
         }
@@ -115,7 +146,25 @@ class SiteAliasName
      */
     public function sitename()
     {
-        return empty($this->sitename) ? 'self' : $this->sitename;
+        if (empty($this->sitename)) {
+            return 'self';
+        }
+        return $this->sitename;
+    }
+
+    /**
+     * Return the sitename portion of the alias name. By definition,
+     * every alias must have a sitename. If the site name is implicit,
+     * then 'self' is assumed.
+     *
+     * @return string
+     */
+    public function sitenameWithLocation()
+    {
+        if (empty($this->sitename)) {
+            return 'self';
+        }
+        return (empty($this->location) ? '' : $this->location . '.') . $this->sitename;
     }
 
     /**
@@ -126,6 +175,7 @@ class SiteAliasName
     public function setSitename($sitename)
     {
         $this->sitename = $sitename;
+        return $this;
     }
 
     /**
@@ -150,23 +200,53 @@ class SiteAliasName
     }
 
     /**
-     * Set the environment portion of the alias record.
+     * Set the environment portion of the alias name.
      *
      * @param string
      */
     public function setEnv($env)
     {
         $this->env = $env;
+        return $this;
     }
 
     /**
-     * Return the 'env' portion of the alias record.
+     * Return the 'env' portion of the alias name.
      *
      * @return string
      */
     public function env()
     {
         return $this->env;
+    }
+
+    /**
+     * Return true if this alias name contains a 'location' portion
+     * @return bool
+     */
+    public function hasLocation()
+    {
+        return !empty($this->location);
+    }
+
+    /**
+     * Set the 'loation' portion of the alias name.
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * Return the 'location' portion of the alias name.
+     *
+     * @param string
+     */
+    public function location()
+    {
+        return $this->location;
     }
 
     /**
@@ -212,14 +292,23 @@ class SiteAliasName
             return false;
         }
 
-        // If $matches contains only two items, then assume the alias name
+        // Get rid of $matches[0]
+        array_shift($matches);
+
+        // If $matches contains only one item1, then assume the alias name
         // contains only the environment.
-        if (count($matches) == 2) {
-            return $this->processSingleItem($matches[1]);
+        if (count($matches) == 1) {
+            return $this->processSingleItem($matches[0]);
         }
 
-        $this->sitename = $matches[1];
-        $this->env = ltrim($matches[2], '.');
+        // If there are three items, then the first is the location.
+        if (count($matches) == 3) {
+            $this->location = trim(array_shift($matches), '.');
+        }
+
+        // The sitename and env follow the location.
+        $this->sitename = trim(array_shift($matches), '.');
+        $this->env = trim(array_shift($matches), '.');
         return true;
     }
 

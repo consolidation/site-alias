@@ -147,11 +147,12 @@ class SiteAliasFileLoader
      * Return a list of all available alias files. Does not include
      * legacy files.
      *
+     * @param string $location Only consider alias files in the specified location.
      * @return string[]
      */
-    public function listAll()
+    public function listAll($location = '')
     {
-        return $this->discovery()->findAllSingleAliasFiles();
+        return $this->discovery()->filterByLocation($location)->findAllSingleAliasFiles();
     }
 
     /**
@@ -165,13 +166,42 @@ class SiteAliasFileLoader
      */
     public function loadMultiple($sitename)
     {
-        if ($path = $this->discovery()->findSingleSiteAliasFile($sitename)) {
+        $result = [];
+        foreach ($this->discovery()->find($sitename) as $path) {
             if ($siteData = $this->loadSiteDataFromPath($path)) {
+                $location = SiteAliasName::locationFromPath($path);
                 // Convert the raw array into a list of alias records.
-                return $this->createAliasRecordsFromSiteData($sitename, $siteData);
+                $result = array_merge(
+                    $result,
+                    $this->createAliasRecordsFromSiteData($sitename, $siteData, $location)
+                );
             }
         }
-        return false;
+        return $result;
+    }
+
+
+    /**
+     * Given a location, return all alias files located there.
+     *
+     * @param string $location The location to filter.
+     * @return AliasRecord[]
+     */
+    public function loadLocation($location)
+    {
+        $result = [];
+        foreach ($this->listAll($location) as $path) {
+            if ($siteData = $this->loadSiteDataFromPath($path)) {
+                $location = SiteAliasName::locationFromPath($path);
+                $sitename = $this->siteNameFromPath($path);
+                // Convert the raw array into a list of alias records.
+                $result = array_merge(
+                    $result,
+                    $this->createAliasRecordsFromSiteData($sitename, $siteData, $location)
+                );
+            }
+        }
+        return $result;
     }
 
     /**
@@ -181,7 +211,7 @@ class SiteAliasFileLoader
      * @param $siteData An associative array of envrionment => site data
      * @return AliasRecord[]
      */
-    protected function createAliasRecordsFromSiteData($sitename, $siteData)
+    protected function createAliasRecordsFromSiteData($sitename, $siteData, $location = '')
     {
         $result = [];
         if (!is_array($siteData) || empty($siteData)) {
@@ -189,7 +219,7 @@ class SiteAliasFileLoader
         }
         foreach ($siteData as $envName => $data) {
             if (is_array($data)) {
-                $aliasName = new SiteAliasName($sitename, $envName);
+                $aliasName = new SiteAliasName($sitename, $envName, $location);
 
                 $processor = new ConfigProcessor();
                 $oneRecord = $this->fetchAliasRecordFromSiteAliasData($aliasName, $processor, $siteData);
@@ -223,7 +253,8 @@ class SiteAliasFileLoader
 
     /**
      * If the alias name is '@sitename', or if it is '@sitename.env', then
-     * look for a sitename.site.yml file that contains it.
+     * look for a sitename.site.yml file that contains it. We also handle
+     * '@location.sitename.env' here as well.
      *
      * @param SiteAliasName $aliasName
      *
@@ -233,7 +264,9 @@ class SiteAliasFileLoader
     {
         // Check to see if the appropriate sitename.alias.yml file can be
         // found. Return if it cannot.
-        $path = $this->discovery()->findSingleSiteAliasFile($aliasName->sitename());
+        $path = $this->discovery()
+            ->filterByLocation($aliasName->location())
+            ->findSingleSiteAliasFile($aliasName->sitename());
         if (!$path) {
             return false;
         }
@@ -250,8 +283,9 @@ class SiteAliasFileLoader
     protected function loadSingleSiteAliasFileAtPath($path)
     {
         $sitename = $this->siteNameFromPath($path);
+        $location = SiteAliasName::locationFromPath($path);
         if ($siteData = $this->loadSiteDataFromPath($path)) {
-            return $this->createAliasRecordsFromSiteData($sitename, $siteData);
+            return $this->createAliasRecordsFromSiteData($sitename, $siteData, $location);
         }
         return false;
     }
@@ -265,6 +299,10 @@ class SiteAliasFileLoader
     protected function siteNameFromPath($path)
     {
         return $this->basenameWithoutExtension($path, '.site.yml');
+
+// OR:
+//        $filename = basename($path);
+//        return preg_replace('#\..*##', '', $filename);
     }
 
     /**
@@ -404,7 +442,7 @@ class SiteAliasFileLoader
         $processor->add($data[$env]);
 
         // Export the combined data and create an AliasRecord object to manage it.
-        return new AliasRecord($processor->export($this->referenceData), '@' . $aliasName->sitename(), $env);
+        return new AliasRecord($processor->export($this->referenceData), '@' . $aliasName->sitenameWithLocation(), $env);
     }
 
     /**

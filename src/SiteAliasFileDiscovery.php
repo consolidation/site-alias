@@ -22,8 +22,16 @@ use Symfony\Component\Finder\Finder;
  */
 class SiteAliasFileDiscovery
 {
-    protected $searchLocations = [];
-    protected $depth = '<= 1';
+    protected $searchLocations;
+    protected $locationFilter;
+    protected $depth;
+
+    public function __construct($searchLocations = [], $depth = '<= 1', $locationFilter = null)
+    {
+        $this->locationFilter = $locationFilter;
+        $this->searchLocations = $searchLocations;
+        $this->depth = $depth;
+    }
 
     /**
      * Add a location that alias files may be found.
@@ -48,6 +56,10 @@ class SiteAliasFileDiscovery
         return $this->searchLocations;
     }
 
+    public function locationFilter()
+    {
+        return $this->locationFilter;
+    }
 
     /**
      * Set the search depth for finding alias files
@@ -62,6 +74,31 @@ class SiteAliasFileDiscovery
     }
 
     /**
+     * Only search for aliases that are in alias files stored in directories
+     * whose basename or key matches the specified location.
+     */
+    public function filterByLocation($location)
+    {
+        if (empty($location)) {
+            return $this;
+        }
+
+        return new SiteAliasFileDiscovery($this->searchLocations(), $this->depth, $location);
+    }
+
+    /**
+     * Find an alias file SITENAME.site.yml in one
+     * of the specified search locations.
+     *
+     * @param string $siteName
+     * @return string[]
+     */
+    public function find($siteName)
+    {
+        return $this->searchForAliasFiles("$siteName.site.yml");
+    }
+
+    /**
      * Find an alias file SITENAME.site.yml in one
      * of the specified search locations.
      *
@@ -70,7 +107,7 @@ class SiteAliasFileDiscovery
      */
     public function findSingleSiteAliasFile($siteName)
     {
-        $matches = $this->searchForAliasFiles("$siteName.site.yml");
+        $matches = $this->find($siteName);
         if (empty($matches)) {
             return false;
         }
@@ -135,28 +172,14 @@ class SiteAliasFileDiscovery
             $path = $file->getRealPath();
             $result[] = $path;
         }
-        return $result;
-    }
+        // In theory we can use $finder->path() instead. That didn't work well,
+        // in practice, though; had trouble correctly escaping the path separators.
+        if (!empty($this->locationFilter)) {
+            $result = array_filter($result, function ($path) {
+                return SiteAliasName::locationFromPath($path) === $this->locationFilter;
+            });
+        }
 
-    /**
-     * Return a list of all alias files with the specified extension.
-     *
-     * @param string $filenameExensions
-     * @return string[]
-     */
-    protected function searchForAliasFilesKeyedByBasenamePrefix($filenameExensions)
-    {
-        if (empty($this->searchLocations)) {
-            return [];
-        }
-        $searchPattern = '*' . $filenameExensions;
-        $finder = $this->createFinder($searchPattern);
-        $result = [];
-        foreach ($finder as $file) {
-            $path = $file->getRealPath();
-            $key = $this->extractKey($file->getBasename(), $filenameExensions);
-            $result[$key] = $path;
-        }
         return $result;
     }
 

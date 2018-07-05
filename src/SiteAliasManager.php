@@ -173,11 +173,23 @@ class SiteAliasManager
             return false;
         }
 
-        // Trim off the '@' and load all that match
-        $result = $this->aliasLoader->loadMultiple(ltrim($name, '@'));
+        // Trim off the '@'
+        $trimmedName = ltrim($name, '@');
+
+        // If the provided name is a location, return all aliases there
+        $result = $this->aliasLoader->loadLocation($trimmedName);
+        if (!empty($result)) {
+            return $result;
+        }
+
+        // If the provided name is a site, return all environments
+        $result = $this->aliasLoader->loadMultiple($trimmedName);
+        if (!empty($result)) {
+            return $result;
+        }
 
         // Special checking for @self
-        if ($name == '@self') {
+        if ($trimmedName == 'self') {
             $self = $this->getSelf();
             $result = array_merge(
                 ['@self' => $self],
@@ -194,8 +206,8 @@ class SiteAliasManager
      *
      * @return string[]
      */
-    public function listAllFilePaths()
+    public function listAllFilePaths($location = '')
     {
-        return $this->aliasLoader->listAll();
+        return $this->aliasLoader->listAll($location);
     }
 }

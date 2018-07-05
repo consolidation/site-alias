@@ -14,7 +14,7 @@ This project provides the implementation for Drush site aliases. It is used in D
 
 ### Alias naming conventions
 
-Site alias names always begin with a `@`, and typically are divided in three parts: the alias file location (optional), the site name, and the environment name, each separated by a dot. None of these names may contain a dot. An example alias that referenced the `dev` envionment of the site `example` in the `myisp` directory might therefore look something like:
+Site alias names always begin with a `@`, and typically are divided in three parts: the alias file location (optional), the site name, and the environment name, each separated by a dot. None of these names may contain a dot. An example alias that referenced the `dev` environment of the site `example` in the `myisp` directory might therefore look something like:
 ```
 @myisp.example.dev
 ``` 
@@ -22,7 +22,7 @@ The location name is optional. If specified, it will only consider alias files l
 ```
 @example.dev
 ```
-If the location is not specified, then the alias manaager will search all locations for an applicable site alias file.
+If the location is not specified, then the alias manaager will consider all locations for an applicable site alias file. Note that by default, deep searching is disabled; unless deep searching is enabled, the location name must refer to a directory that is explicitly listed as a location to place site alias files (e.g. in the application's configuration file).
 
 It is also possible to use single-word aliases. These can sometimes be ambiguous; the site alias manager will resolve single-word aliases as follows:
 
@@ -42,7 +42,7 @@ In the first example, with the site alias appearing before the command name, the
 
 ### Alias filenames and locations
 
-It is also up to each individual commandline tool where to search for alias files. Search locations may be added to the SiteAliasManager via an API call. Alias files are only found if they appear immediately inside one of the specified search locations; deep searching is never done.
+It is also up to each individual commandline tool where to search for alias files. Search locations may be added to the SiteAliasManager via an API call. By default, alias files are only found if they appear immediately inside one of the specified search locations. Deep searching is only done if explicitly enabled by the application.
 
 Aliases are typically stored in Yaml files, although other formats may also be used if a custom alias data file loader is provided. The extension of the file determines the loader type (.yml for Yaml). The base name of the file, sans its extension, is the site name used to address the alias on the commandline. Site names may not contain periods.
 

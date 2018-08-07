@@ -39,10 +39,12 @@ class SiteAliasFileDiscovery
      * @param string $path
      * @return $this
      */
-    public function addSearchLocation($path)
+    public function addSearchLocation($paths)
     {
-        if (is_dir($path)) {
-            $this->searchLocations[] = $path;
+        foreach ((array)$paths as $path) {
+            if (is_dir($path)) {
+                $this->searchLocations[] = $path;
+            }
         }
         return $this;
     }

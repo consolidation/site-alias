@@ -11,7 +11,7 @@ use Drush\Utils\FsUtils;
  *
  * @see AliasRecordInterface for documentation
  */
-class AliasRecord extends Config implements AliasRecordInterface, \Drush\SiteAlias\AliasRecord
+class AliasRecord extends Config implements AliasRecordInterface
 {
     /**
      * @var string

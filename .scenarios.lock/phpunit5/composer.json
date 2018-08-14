@@ -14,8 +14,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Consolidation\\SiteAlias\\": "src",
-            "Drush\\SiteAlias\\": "src/legacy"
+            "Consolidation\\SiteAlias\\": "src"
         }
     },
     "autoload-dev": {
@@ -56,7 +55,7 @@
             "@cs"
         ],
         "release": [
-            "( echo && echo 'Ensure that VERSION file contains the version to release.' && echo \"Current version: $(cat VERSION)\" && tag=$(cat VERSION) && git tag \"$tag\" && git push origin \"$tag\" )"
+            "( sed -e 's/-dev$//' VERSION > VERSION.tmp && mv -f VERSION.tmp VERSION && ver=\"$(cat VERSION)\" && git add VERSION && git commit -m \"Version $ver\" && git push origin master && git tag \"$ver\" && git push origin \"$ver\" && a=( ${ver//./ } ) && ((a[2]++)) && echo \"${a[0]}.${a[1]}.${a[2]}-dev\" > VERSION && git add VERSION && git commit -m \"Back to -dev\" && git push origin master )"
         ],
         "scenario": ".scenarios.lock/install",
         "post-update-cmd": [

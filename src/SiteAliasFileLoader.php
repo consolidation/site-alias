@@ -429,20 +429,44 @@ class SiteAliasFileLoader
     {
         $data = $this->adjustIfSingleAlias($data);
         $env = $this->getEnvironmentName($aliasName, $data);
-        if (!$this->siteEnvExists($data, $env)) {
+        $env_data = $this->getRequestedEnvData($data, $env);
+        if (!$env_data) {
             return false;
         }
 
         // Add the 'common' section if it exists.
-        if (isset($data['common']) && is_array($data['common'])) {
+        if ($this->siteEnvExists($data, 'common')) {
             $processor->add($data['common']);
         }
 
         // Then add the data from the desired environment.
-        $processor->add($data[$env]);
+        $processor->add($env_data);
 
         // Export the combined data and create an AliasRecord object to manage it.
-        return new AliasRecord($processor->export($this->referenceData), '@' . $aliasName->sitenameWithLocation(), $env);
+        return new AliasRecord($processor->export($this->referenceData + ['env-name' => $env]), '@' . $aliasName->sitenameWithLocation(), $env);
+    }
+
+    /**
+     * getRequestedEnvData fetches the data for the specified environment
+     * from the provided site record data.
+     *
+     * @param array $data The site alias data
+     * @param string $env The name of the environment desired
+     * @return array|false
+     */
+    protected function getRequestedEnvData(array $data, $env)
+    {
+        // If the requested environment exists, we will use it.
+        if ($this->siteEnvExists($data, $env)) {
+            return $data[$env];
+        }
+
+        // If there is a wildcard environment, then return that instead.
+        if ($this->siteEnvExists($data, '*')) {
+            return $data['*'];
+        }
+
+        return false;
     }
 
     /**

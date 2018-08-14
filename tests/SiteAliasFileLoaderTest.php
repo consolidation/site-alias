@@ -17,6 +17,31 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->sut->addLoader('yml', $ymlLoader);
     }
 
+    public function testLoadWildAliasFile()
+    {
+        $siteAliasFixtures = $this->fixturesDir() . '/sitealiases/sites';
+        $this->assertTrue(is_dir($siteAliasFixtures));
+        $this->assertTrue(is_file($siteAliasFixtures . '/wild.site.yml'));
+
+        $this->sut->addSearchLocation($siteAliasFixtures);
+
+        // Try to get the dev environment.
+        $name = SiteAliasName::parse('@wild.dev');
+        $result = $this->callProtected('loadSingleAliasFile', [$name]);
+        $this->assertTrue($result instanceof AliasRecord);
+        $this->assertEquals('/path/to/wild', $result->get('root'));
+        $this->assertEquals('bar', $result->get('foo'));
+
+        // Try to fetch an environment that does not exist. Since this is
+        // a wildcard alias, there should
+        $name = SiteAliasName::parse('@wild.other');
+        $result = $this->callProtected('loadSingleAliasFile', [$name]);
+        $this->assertTrue($result instanceof AliasRecord);
+        $this->assertEquals('/wild/path/to/wild', $result->get('root'));
+        $this->assertEquals('bar', $result->get('foo'));
+
+    }
+
     public function testLoadSingleAliasFile()
     {
         $siteAliasFixtures = $this->fixturesDir() . '/sitealiases/sites';
@@ -117,7 +142,7 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $all = $this->sut->loadAll();
-        $this->assertEquals('@other.single.common,@other.single.dev,@other.single.other,@single.alternate,@single.common,@single.dev', implode(',', array_keys($all)));
+        $this->assertEquals('@other.single.common,@other.single.dev,@other.single.other,@single.alternate,@single.common,@single.dev,@wild.*,@wild.common,@wild.dev', implode(',', array_keys($all)));
     }
 
     public function testLoadMultiple()

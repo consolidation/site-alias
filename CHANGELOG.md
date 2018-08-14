@@ -1,9 +1,14 @@
 # Changelog
 
-### Unreleased
+### 1.1.0 - 2018/Aug/14
 
-* List pending changes here.
+* Add wildcard site alias environments. (#2)
 
-### 0.1.0 - 2018/Jun/17
+### 1.0.1 - 2018/Aug/7
 
-* Created from template `consolidation/site-alias`
+* Allow addSearchLocation to take an array
+
+### 1.0.0 - 2018/July/5
+
+* Initial release
+

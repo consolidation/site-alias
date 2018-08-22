@@ -164,10 +164,10 @@ class SiteAliasFileLoader
      * @param string $sitename The site name to return all environments for.
      * @return AliasRecord[]|false
      */
-    public function loadMultiple($sitename)
+    public function loadMultiple($sitename, $location = null)
     {
         $result = [];
-        foreach ($this->discovery()->find($sitename) as $path) {
+        foreach ($this->discovery()->filterByLocation($location)->find($sitename) as $path) {
             if ($siteData = $this->loadSiteDataFromPath($path)) {
                 $location = SiteAliasName::locationFromPath($path);
                 // Convert the raw array into a list of alias records.
@@ -179,7 +179,6 @@ class SiteAliasFileLoader
         }
         return $result;
     }
-
 
     /**
      * Given a location, return all alias files located there.

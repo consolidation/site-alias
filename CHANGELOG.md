@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.2 - 2018/Aug/21
+
+* Allow SiteAliasFileLoader::loadMultiple to be filtered by location. (#3)
+
 ### 1.1.0 + 1.1.1 - 2018/Aug/14
 
 * Add wildcard site alias environments. (#2)

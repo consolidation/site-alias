@@ -63,6 +63,15 @@ dev:
   user: www-data
 ```
 
+### Wildcard environments (Experimental)
+
+It is also possible to define "wildcard" environments that will match any provided environment name. This is only possible to do in instances where the contents of the wildcard aliases are all the same, except for places where the environment name appears. To substitute the name of the environment into a wildcard domain, use the variable replacement string `${env-name}`. For example, a wildcard alias that will match any multisite in a Drupal site might look something like the following example:
+```
+'*':
+  root: /wild/path/to/wild
+  uri: https://${env-name}.example.com
+```
+
 ### 'Self' environment aliases
 
 As previously mentioned, an alias in the form of `@<env>` is interpreted as `@self.<env>`. This allows sites to define a `self.site.yml` file that contains common aliases shared among a team--for example, `@stage` and `@live`.

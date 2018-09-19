@@ -136,7 +136,8 @@ class SiteAliasFileDiscovery
     {
         return array_merge(
             $this->searchForAliasFiles('*.alias.drushrc.php'),
-            $this->searchForAliasFiles('*.aliases.drushrc.php')
+            $this->searchForAliasFiles('*.aliases.drushrc.php'),
+            $this->searchForAliasFiles('aliases.drushrc.php')
         );
     }
 

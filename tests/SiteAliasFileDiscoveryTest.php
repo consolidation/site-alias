@@ -36,7 +36,7 @@ class SiteAliasFileDiscoveryTest extends TestCase
 
         $result = $this->sut->findAllLegacyAliasFiles();
         $paths = $this->simplifyToBasenamesWithLocation($result);
-        $this->assertEquals('legacy/cc.aliases.drushrc.php,legacy/one.alias.drushrc.php,legacy/pantheon.aliases.drushrc.php,legacy/server.aliases.drushrc.php', implode(',', $paths));
+        $this->assertEquals('legacy/aliases.drushrc.php,legacy/cc.aliases.drushrc.php,legacy/one.alias.drushrc.php,legacy/pantheon.aliases.drushrc.php,legacy/server.aliases.drushrc.php', implode(',', $paths));
     }
 
     protected function assertLocation($expected, $path)

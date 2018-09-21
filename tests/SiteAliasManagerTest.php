@@ -97,12 +97,6 @@ root: /dup/path/to/single',
      */
     public function testGetMultiple()
     {
-        $files = $this->manager->listAllFilePaths();
-        $files = array_map(function ($item) { return str_replace($this->fixturesDir() . '/', '', $item); }, $files);
-        sort($files);
-
-        $this->assertEquals('sitealiases/sites/simple.site.yml,sitealiases/sites/single.site.yml,sitealiases/sites/wild.site.yml', implode(',', $files));
-
         // First set of tests: get all aliases in the default location
 
         $all = $this->manager->getMultiple();

@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.1.3 - 2018/Sept/21
+
+* Experimental wildcard environments
+* Find 'aliases.drushrc.php' files when converting aliases.
+
 ### 1.1.2 - 2018/Aug/21
 
 * Allow SiteAliasFileLoader::loadMultiple to be filtered by location. (#3)

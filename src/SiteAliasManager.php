@@ -30,6 +30,7 @@ class SiteAliasManager
     public function setReferenceData($data)
     {
         $this->aliasLoader->setReferenceData($data);
+        return $this;
     }
 
     /**
@@ -160,10 +161,10 @@ class SiteAliasManager
      * If the provided name is a site specification et. al.,
      * then this method will return 'false'.
      *
-     * @param string $name Alias name or site specification
+     * @param string $name Alias name
      * @return AliasRecord[]|false
      */
-    public function getMultiple($name)
+    public function getMultiple($name = '')
     {
         if (empty($name)) {
             return $this->aliasLoader->loadAll();

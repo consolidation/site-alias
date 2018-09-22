@@ -142,7 +142,7 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $all = $this->sut->loadAll();
-        $this->assertEquals('@other.single.dev,@other.single.other,@single.alternate,@single.dev,@wild.*,@wild.dev', implode(',', array_keys($all)));
+        $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other,@single.alternate,@single.dev,@wild.*,@wild.dev', implode(',', array_keys($all)));
     }
 
     public function testLoadMultiple()
@@ -160,6 +160,6 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $aliases = $this->sut->loadLocation('other');
-        $this->assertEquals('@other.single.dev,@other.single.other', implode(',', array_keys($aliases)));
+        $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other', implode(',', array_keys($aliases)));
     }
 }

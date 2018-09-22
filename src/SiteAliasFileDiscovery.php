@@ -169,6 +169,10 @@ class SiteAliasFileDiscovery
         if (empty($this->searchLocations)) {
             return [];
         }
+        list($match, $site) = $this->splitLocationFromSite($this->locationFilter);
+        if (!empty($site)) {
+            $searchPattern = str_replace('*', $site, $searchPattern);
+        }
         $finder = $this->createFinder($searchPattern);
         $result = [];
         foreach ($finder as $file) {
@@ -177,7 +181,6 @@ class SiteAliasFileDiscovery
         }
         // Find every location where the parent directory name matches
         // with the first part of the search pattern.
-        $match = explode('.', $this->locationFilter, 2)[0];
         // In theory we can use $finder->path() instead. That didn't work well,
         // in practice, though; had trouble correctly escaping the path separators.
         if (!empty($this->locationFilter)) {
@@ -188,6 +191,19 @@ class SiteAliasFileDiscovery
 
         return $result;
     }
+
+    /**
+     * splitLocationFromSite returns the part of 'site' before the first
+     * '.' as the "path match" component, and the part after the first
+     * '.' as the "site" component.
+     */
+    protected function splitLocationFromSite($site)
+    {
+        $parts = explode('.', $site, 3) + ['', '', ''];
+
+        return array_slice($parts, 0, 2);
+    }
+
 
     // TODO: Seems like this could just be basename()
     protected function extractKey($basename, $filenameExensions)

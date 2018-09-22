@@ -1,9 +1,10 @@
 # Changelog
 
-### 1.1.3 - 2018/Sept/21
+### 1.1.4 and 1.1.3 - 2018/Sept/21
 
 * Experimental wildcard environments
 * Find 'aliases.drushrc.php' files when converting aliases.
+* Fix get multiple (#6)
 
 ### 1.1.2 - 2018/Aug/21
 

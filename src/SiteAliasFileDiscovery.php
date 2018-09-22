@@ -175,11 +175,14 @@ class SiteAliasFileDiscovery
             $path = $file->getRealPath();
             $result[] = $path;
         }
+        // Find every location where the parent directory name matches
+        // with the first part of the search pattern.
+        $match = explode('.', $this->locationFilter, 2)[0];
         // In theory we can use $finder->path() instead. That didn't work well,
         // in practice, though; had trouble correctly escaping the path separators.
         if (!empty($this->locationFilter)) {
-            $result = array_filter($result, function ($path) {
-                return SiteAliasName::locationFromPath($path) === $this->locationFilter;
+            $result = array_filter($result, function ($path) use ($match) {
+                return SiteAliasName::locationFromPath($path) === $match;
             });
         }
 

@@ -148,6 +148,18 @@ root: /dup/path/to/single',
         sort($allNames);
 
         $this->assertEquals('@other.single.dev,@other.single.other', implode(',', $allNames));
+
+        $all = $this->manager->getMultiple('@dup.single');
+        $allNames = array_keys($all);
+        sort($allNames);
+
+        $this->assertEquals('@dup.single.alternate,@dup.single.dev', implode(',', $allNames));
+
+        $all = $this->manager->getMultiple('@other.single');
+        $allNames = array_keys($all);
+        sort($allNames);
+
+        $this->assertEquals('@other.single.dev,@other.single.other', implode(',', $allNames));
     }
 
     /**

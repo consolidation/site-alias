@@ -115,6 +115,36 @@ This library comes with a commandline tool called `alias-tool`. The only purpose
 this tool serves is to provide a way to do ad-hoc experimentation and testing
 for this library.
 
+Example:
+```
+$ ./alias-tool site:list tests/fixtures/sitealiases/sites/
+
+ ! [NOTE] Add search location: tests/fixtures/sitealiases/sites/                                    
+
+'@single.alternate':
+  foo: bar
+  root: /alternate/path/to/single
+'@single.dev':
+  foo: bar
+  root: /path/to/single
+'@wild.*':
+  foo: bar
+  root: /wild/path/to/wild
+  uri: 'https://*.example.com'
+'@wild.dev':
+  foo: bar
+  root: /path/to/wild
+  uri: 'https://dev.example.com'
+
+$ ./alias-tool site:get tests/fixtures/sitealiases/sites/ @single.dev
+
+ ! [NOTE] Add search location: tests/fixtures/sitealiases/sites/                                    
+
+ ! [NOTE] Alias parameter: '@single.dev'                                                            
+
+foo: bar
+root: /path/to/single
+```
 See `./alias-tool help` and `./alias-tool list` for more information.
 
 ## Release Procedure

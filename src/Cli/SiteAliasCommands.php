@@ -84,7 +84,7 @@ class SiteAliasCommands extends \Robo\Tasks
     }
 
     /**
-     * List available site aliases.
+     * Show contents of a single site alias.
      *
      * @command site:get
      * @format yaml
@@ -104,6 +104,30 @@ class SiteAliasCommands extends \Robo\Tasks
         }
 
         return $result->export();
+    }
+
+    /**
+     * Access a value from a single alias.
+     *
+     * @command site:value
+     * @format yaml
+     * @return string
+     */
+    public function siteValue(array $varArgs)
+    {
+        $this->aliasLoader = new SiteAliasFileLoader();
+        $ymlLoader = new YamlDataFileLoader();
+        $this->aliasLoader->addLoader('yml', $ymlLoader);
+        $key = array_pop($varArgs);
+        $aliasName = $this->getLocationsAndAliasName($varArgs, $this->aliasLoader);
+
+        $manager = new SiteAliasManager($this->aliasLoader);
+        $result = $manager->get($aliasName);
+        if (!$result) {
+            throw new \Exception("No alias found");
+        }
+
+        return $result->get($key);
     }
 
     /**

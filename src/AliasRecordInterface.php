@@ -4,7 +4,6 @@ namespace Consolidation\SiteAlias;
 use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
 use Consolidation\Config\Util\ArrayUtil;
-use Drush\Utils\FsUtils;
 
 /**
  * An alias record is a configuration record containing well-known items.

@@ -1,5 +1,9 @@
 # Changelog
 
+### Unreleased
+
+* Add a site:value command for ad-hoc testing
+
 ### 1.1.5 - 1.1.3 - 2018/Sept/21
 
 * Experimental wildcard environments

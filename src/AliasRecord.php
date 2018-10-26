@@ -67,11 +67,16 @@ class AliasRecord extends Config implements AliasRecordInterface
 
     /**
      * @inheritdoc
+     *
+     * @throws \Exception when the alias does not specify a root.
      */
     public function root()
     {
+        if (!$this->hasRoot()) {
+            throw new \Exception('Site alias ' . $this->name . ' does not specify a root.');
+        }
         $root = $this->get('root');
-        if (!is_null($root) && $this->isLocal()) {
+        if ($this->isLocal()) {
             return FsUtils::realpath($root);
         }
         return $root;

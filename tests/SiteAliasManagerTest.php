@@ -171,8 +171,10 @@ root: /dup/path/to/single',
         $this->assertEquals($alias->root(), '/path/to/single');
         /* @var AliasRecord $alias */
         $alias = $this->manager->get('@single.common');
-        // Ensure that when root is not specified in the alias, it returns null.
-        $this->assertNull($alias->root());
+        // Ensure that when root is not specified in the alias, an Exception is
+        // thrown.
+        $this->expectExceptionMessage('Site alias @single.common does not specify a root.');
+        $alias->root();
     }
 
     /**

@@ -134,7 +134,7 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function isRemote()
     {
-        return !$this->isLocal();
+        return $this->has('host');
     }
 
     /**
@@ -142,10 +142,7 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function isLocal()
     {
-        if ($host = $this->remoteHost()) {
-            return $host == 'localhost' || $host == '127.0.0.1';
-        }
-        return true;
+        return !$this->isRemote();
     }
 
     /**

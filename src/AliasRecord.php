@@ -163,11 +163,31 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function localRoot()
     {
-        if (!$this->isRemote()) {
+        if ($this->isLocal()) {
             return $this->root();
         }
 
         return false;
+    }
+
+    /**
+     * os returns the OS that this alias record points to. For local alias
+     * records, PHP_OS will be returned. For remote alias records, the
+     * value from the `os` element will be returned. If there is no `os`
+     * element, then the default assumption is that the remote system is Linux.
+     *
+     * @return string
+     *   Linux
+     *   WIN* (e.g. WINNT)
+     *   CYGWIN
+     *   MINGW* (e.g. MINGW32)
+     */
+    public function os()
+    {
+        if ($this->isLocal()) {
+            return PHP_OS;
+        }
+        return $this->get('os', 'Linux');
     }
 
     /**

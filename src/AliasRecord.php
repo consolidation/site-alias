@@ -163,7 +163,7 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function localRoot()
     {
-        if ($this->isLocal()) {
+        if ($this->isLocal() && $this->hasRoot()) {
             return $this->root();
         }
 

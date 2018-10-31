@@ -1,7 +1,13 @@
 # Changelog
 
-### Unreleased
+### 1.1.8 - 1.1.7 - 2018/Oct/30
 
+* Fixes #11: Prevent calls to 'localRoot' from failing when there is no root set (#15)
+
+### 1.1.6 - 2018/Oct/27
+
+* Add an 'os' method to AliasRecord
+* Only run root through realpath if it is present (throw otherwise) (#11)
 * Add a site:value command for ad-hoc testing
 
 ### 1.1.5 - 1.1.3 - 2018/Sept/21

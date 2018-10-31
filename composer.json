@@ -1,6 +1,6 @@
 {
     "name": "consolidation/site-alias",
-    "description": "Template project for PHP libraries.",
+    "description": "Manage alias records for local and remote sites.",
     "license": "MIT",
     "authors": [
         {

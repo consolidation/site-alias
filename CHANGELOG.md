@@ -1,8 +1,9 @@
 # Changelog
 
-### 1.1.8 - 1.1.7 - 2018/Oct/30
+### 1.1.9 - 1.1.7 - 2018/Oct/30
 
 * Fixes #11: Prevent calls to 'localRoot' from failing when there is no root set (#15)
+* Set short description in composer.json
 
 ### 1.1.6 - 2018/Oct/27
 

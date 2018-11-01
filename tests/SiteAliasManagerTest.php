@@ -163,21 +163,6 @@ root: /dup/path/to/single',
     }
 
     /**
-     * @covers \Consolidation\SiteAlias\AliasRecord::root()
-     */
-    public function testGetRoot() {
-        /* @var AliasRecord $alias */
-        $alias = $this->manager->get('@single');
-        $this->assertEquals($alias->root(), '/path/to/single');
-        /* @var AliasRecord $alias */
-        $alias = $this->manager->get('@single.common');
-        // Ensure that when root is not specified in the alias, an Exception is
-        // thrown.
-        $this->expectExceptionMessage('Site alias @single.common does not specify a root.');
-        $alias->root();
-    }
-
-    /**
      * @dataProvider managerGetTestValues
      */
     public function testGet(

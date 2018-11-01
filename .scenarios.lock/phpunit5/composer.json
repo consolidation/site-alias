@@ -1,6 +1,6 @@
 {
     "name": "consolidation/site-alias",
-    "description": "Template project for PHP libraries.",
+    "description": "Manage alias records for local and remote sites.",
     "license": "MIT",
     "authors": [
         {
@@ -55,7 +55,7 @@
             "@cs"
         ],
         "release": [
-            "( sed -e 's/-dev$//' VERSION > VERSION.tmp && mv -f VERSION.tmp VERSION && ver=\"$(cat VERSION)\" && git add VERSION && git commit -m \"Version $ver\" && git tag \"$ver\" && git push origin \"$ver\" && a=( ${ver//./ } ) && ((a[2]++)) && echo \"${a[0]}.${a[1]}.${a[2]}-dev\" > VERSION && git add VERSION && git commit -m \"Back to -dev\" && git push origin master )"
+            "release VERSION"
         ],
         "scenario": ".scenarios.lock/install",
         "post-update-cmd": [

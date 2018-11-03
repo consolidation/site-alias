@@ -71,7 +71,7 @@ class AliasRecord extends Config implements AliasRecordInterface
     public function root()
     {
         $root = $this->get('root');
-        if ($this->isLocal() && !empty($root)) {
+        if ($this->isLocal()) {
             return FsUtils::realpath($root);
         }
         return $root;

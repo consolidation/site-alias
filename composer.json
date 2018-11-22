@@ -31,9 +31,9 @@
         "symfony/console": "^2.8|^3|^4",
         "knplabs/github-api": "^2.7",
         "php-http/guzzle6-adapter": "^1.1",
-        "phpunit/phpunit": "^5",
-        "g1a/composer-test-scenarios": "^2",
-        "satooshi/php-coveralls": "^2",
+        "phpunit/phpunit": "^6",
+        "g1a/composer-test-scenarios": "^3",
+        "php-coveralls/php-coveralls": "^1",
         "squizlabs/php_codesniffer": "^2.8"
     },
     "scripts": {
@@ -56,11 +56,6 @@
         ],
         "release": [
             "release VERSION"
-        ],
-        "scenario": ".scenarios.lock/install",
-        "post-update-cmd": [
-            "create-scenario phpunit5 'phpunit/phpunit:^5.7.27' --platform-php '5.6.33'",
-            "dependency-licenses"
         ]
     },
     "config": {
@@ -71,6 +66,21 @@
         }
     },
     "extra": {
+        "scenarios": {
+            "phpunit5": {
+                "require-dev": {
+                    "phpunit/phpunit": "^5.7.27"
+                },
+                "remove": [
+                    "php-coveralls/php-coveralls"
+                ],
+                "config": {
+                    "platform": {
+                        "php": "5.6.33"
+                    }
+                }
+            }
+        },
         "branch-alias": {
             "dev-master": "2.x-dev"
         }

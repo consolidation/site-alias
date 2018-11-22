@@ -1,6 +1,6 @@
 {
     "name": "consolidation/site-alias",
-    "description": "Template project for PHP libraries.",
+    "description": "Manage alias records for local and remote sites.",
     "license": "MIT",
     "authors": [
         {
@@ -14,27 +14,26 @@
     ],
     "autoload": {
         "psr-4": {
-            "Consolidation\\SiteAlias\\": "src"
+            "Consolidation\\SiteAlias\\": "../../src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Consolidation\\SiteAlias\\": "tests/src"
+            "Consolidation\\SiteAlias\\": "../../tests/src"
         }
     },
     "require": {
         "php": ">=5.5.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^5.7.27",
+        "symfony/yaml": "~2.3|^3",
         "consolidation/Robo": "^1.2.3",
-        "g1a/composer-test-scenarios": "^2",
+        "symfony/console": "^2.8|^3|^4",
         "knplabs/github-api": "^2.7",
         "php-http/guzzle6-adapter": "^1.1",
-        "phpunit/phpunit": "^5.7.27",
-        "satooshi/php-coveralls": "^2",
-        "squizlabs/php_codesniffer": "^2.8",
-        "symfony/console": "^2.8|^3|^4",
-        "symfony/yaml": "~2.3|^3"
+        "g1a/composer-test-scenarios": "^3",
+        "squizlabs/php_codesniffer": "^2.8"
     },
     "scripts": {
         "phar:install-tools": [
@@ -55,26 +54,20 @@
             "@cs"
         ],
         "release": [
-            "( sed -e 's/-dev$//' VERSION > VERSION.tmp && mv -f VERSION.tmp VERSION && ver=\"$(cat VERSION)\" && git add VERSION && git commit -m \"Version $ver\" && git tag \"$ver\" && git push origin \"$ver\" && a=( ${ver//./ } ) && ((a[2]++)) && echo \"${a[0]}.${a[1]}.${a[2]}-dev\" > VERSION && git add VERSION && git commit -m \"Back to -dev\" && git push origin master )"
-        ],
-        "scenario": ".scenarios.lock/install",
-        "post-update-cmd": [
-            "create-scenario phpunit5 'phpunit/phpunit:^5.7.27' --platform-php '5.6.33'",
-            "dependency-licenses"
+            "release VERSION"
         ]
     },
     "config": {
-        "optimize-autoloader": true,
-        "sort-packages": true,
         "platform": {
             "php": "5.6.33"
         },
+        "optimize-autoloader": true,
+        "sort-packages": true,
         "vendor-dir": "../../vendor"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "2.x-dev"
         }
-    },
-    "minimum-stability": "stable"
+    }
 }

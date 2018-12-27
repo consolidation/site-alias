@@ -139,7 +139,7 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function isRemote()
     {
-        return $this->has('host');
+        return $this->has('host') || $this->has('service');
     }
 
     /**
@@ -257,6 +257,8 @@ class AliasRecord extends Config implements AliasRecordInterface
     {
         return [
             'user' => 'remote-user',
+            # service is used by Docker Compose transport.
+            'service' => 'remote-host',
             'host' => 'remote-host',
             'root' => 'root',
             'uri' => 'uri',

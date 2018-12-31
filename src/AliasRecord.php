@@ -139,7 +139,7 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function isRemote()
     {
-        return $this->has('host') || $this->has('service');
+        return $this->has('host') || $this->isDockerCompose();
     }
 
     /**
@@ -148,6 +148,16 @@ class AliasRecord extends Config implements AliasRecordInterface
     public function isLocal()
     {
         return !$this->isRemote();
+    }
+
+    /**
+     * Does the alias record use the Docker Compose transport.
+     *
+     * @return bool
+     */
+    public function isDockerCompose()
+    {
+        return $this->has('service');
     }
 
     /**

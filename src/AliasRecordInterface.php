@@ -128,7 +128,7 @@ interface AliasRecordInterface extends ConfigInterface
      *
      * @return bool
      */
-    public function isContainer()
+    public function isContainer();
 
     /**
      * Return true if this alias record is for the local system

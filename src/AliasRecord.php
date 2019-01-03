@@ -147,7 +147,15 @@ class AliasRecord extends Config implements AliasRecordInterface
      */
     public function isLocal()
     {
-        return !$this->isRemote();
+        return !$this->isRemote() && !$this->isContainer();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isContainer()
+    {
+        return $this->has('docker');
     }
 
     /**

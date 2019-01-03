@@ -116,8 +116,19 @@ interface AliasRecordInterface extends ConfigInterface
     /**
      * Return true if this alias record has a remote host that is not
      * the local host
+     *
+     * @internal
      */
     public function isRemote();
+
+    /**
+     * Return true if the alias record use the Docker Compose transport.
+     *
+     * @internal
+     *
+     * @return bool
+     */
+    public function isContainer();
 
     /**
      * Return true if this alias record is for the local system

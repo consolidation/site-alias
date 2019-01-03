@@ -265,8 +265,6 @@ class AliasRecord extends Config implements AliasRecordInterface
     {
         return [
             'user' => 'remote-user',
-            # This remap is curently required for firing the RedispatchHook https://github.com/drush-ops/drush/blob/85826faff6ad5ae162af843e94df99157f8b717e/src/Runtime/RedispatchHook.php#L58-L66
-            'docker.service' => 'remote-host',
             'host' => 'remote-host',
             'root' => 'root',
             'uri' => 'uri',

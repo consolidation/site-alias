@@ -41,7 +41,7 @@ class SiteAliasWithConfig implements AliasRecordInterface
      */
     public function name()
     {
-        return $this->siteAlias()->name();
+        return $this->siteAlias->name();
     }
 
     /**

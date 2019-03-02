@@ -96,11 +96,6 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testLoadLegacy()
-    {
-        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/legacy');
-    }
-
     public function testLoad()
     {
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/sites');

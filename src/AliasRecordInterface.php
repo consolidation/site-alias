@@ -40,21 +40,6 @@ use Consolidation\Config\Util\ArrayUtil;
 interface AliasRecordInterface extends ConfigInterface
 {
     /**
-     * Get a value from the provided config option. Values stored in
-     * this alias record will override the configuration values, if present.
-     *
-     * If multiple alias records need to be chained together in a more
-     * complex priority arrangement, @see \Consolidation\Config\Config\ConfigOverlay.
-     *
-     * @param ConfigInterface $config The configuration object to pull fallback data from
-     * @param string $key The data item to fetch
-     * @param mixed $default The default value to return if there is no match
-     *
-     * @return string
-     */
-    public function getConfig(ConfigInterface $config, $key, $default = null);
-
-    /**
      * Return the name of this alias record.
      *
      * @return string

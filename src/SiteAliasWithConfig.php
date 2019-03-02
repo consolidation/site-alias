@@ -31,14 +31,6 @@ class SiteAliasWithConfig implements AliasRecordInterface
     /**
      * @inheritdoc
      */
-    public function getConfig(ConfigInterface $config, $key, $default = null)
-    {
-        throw new \Exception('getConfig is deprecated, and not supported in SiteAliasWithConfig (which replaces it). Use "get".');
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function name()
     {
         return $this->siteAlias->name();

@@ -35,17 +35,6 @@ class AliasRecord extends Config implements AliasRecordInterface
     /**
      * @inheritdoc
      */
-    public function getConfig(ConfigInterface $config, $key, $default = null)
-    {
-        if ($this->has($key)) {
-            return $this->get($key, $default);
-        }
-        return $config->get($key, $default);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function name()
     {
         return $this->name;

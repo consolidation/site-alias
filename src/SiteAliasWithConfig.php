@@ -3,7 +3,7 @@ namespace Consolidation\SiteAlias;
 
 use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
-use Consolidation\Config\Util\ConfigRutimeInterface;
+use Consolidation\Config\Util\ConfigRuntimeInterface;
 use Consolidation\SiteAlias\SiteAlias;
 use Consolidation\SiteAlias\SiteAliasInterface;
 use Consolidation\SiteAlias\SiteAliasTrait;
@@ -54,7 +54,7 @@ class SiteAliasWithConfig implements SiteAliasInterface, ConfigRuntimeInterface
             return $runtimeConfig;
         }
 
-        if ($defaultConfig instanceof ConfigRutimeInterface) {
+        if ($defaultConfig instanceof ConfigRuntimeInterface) {
             return $defaultConfig->runtimeConfig();
         }
 

@@ -1,6 +1,15 @@
 # Changelog
 
-### 1.1.9 - 1.1.7 - 2018/Oct/30
+### 3.0.0-beta1 2019-03-03
+
+* Rename AliasRecord to SiteAlias for consistency (#32)
+* Add SiteAliasWithConfig class (#31)
+
+### 2.0.0 2018-11-01
+
+* Throw when root() is called with no root
+
+### 1.1.7 - 1.1.9 - 2018/Oct/30
 
 * Fixes #11: Prevent calls to 'localRoot' from failing when there is no root set (#15)
 * Set short description in composer.json
@@ -11,7 +20,7 @@
 * Only run root through realpath if it is present (throw otherwise) (#11)
 * Add a site:value command for ad-hoc testing
 
-### 1.1.5 - 1.1.3 - 2018/Sept/21
+### 1.1.3 - 1.1.5 - 2018/Sept/21
 
 * Experimental wildcard environments
 * Find 'aliases.drushrc.php' files when converting aliases.

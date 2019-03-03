@@ -1,7 +1,9 @@
 <?php
 namespace Consolidation\SiteAlias;
 
+use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
+use Consolidation\Config\Util\ConfigRutimeInterface;
 use Consolidation\SiteAlias\SiteAlias;
 use Consolidation\SiteAlias\SiteAliasInterface;
 use Consolidation\SiteAlias\SiteAliasTrait;
@@ -13,7 +15,7 @@ use Consolidation\SiteAlias\SiteAliasTrait;
  *   - Runtime config (set on commandline): Options that override site alias contents
  *   - Default config (set from config files): Default options
  */
-class SiteAliasWithConfig implements SiteAliasInterface
+class SiteAliasWithConfig implements SiteAliasInterface, ConfigRutimeInterface
 {
     use SiteAliasTrait;
 
@@ -26,6 +28,45 @@ class SiteAliasWithConfig implements SiteAliasInterface
         $this->siteAlias = $siteAlias;
         $this->defaultConfig = $defaultConfig;
         $this->runtimeConfig = $runtimeConfig;
+    }
+
+    /**
+     * combine the provided site alias with configuration.
+     *
+     * @return SiteAlias read-only site alias combined with the runtime
+     *   config (overrides the site alias values) and the default config.
+     */
+    public static function create(SiteAliasInterface $siteAlias, ConfigInterface $defaultConfig, ConfigInterface $runtimeConfig = null)
+    {
+        $runtimeConfig = static::determineCorrectRuntimeConfig($defaultConfig, $runtimeConfig);
+
+        return new self($siteAlias, $defaultConfig, $runtimeConfig);
+    }
+
+    /**
+     * Determine what object to use for the runtime config. If a specific
+     * runtime config is given, use that. Otherwise, pull it from the default
+     * configuration if available.
+     */
+    protected static function determineCorrectRuntimeConfig(ConfigInterface $defaultConfig, ConfigInterface $runtimeConfig)
+    {
+        if ($runtimeConfig) {
+            return $runtimeConfig;
+        }
+
+        if ($defaultConfig instanceof ConfigRutimeInterface) {
+            return $defaultConfig->runtimeConfig();
+        }
+
+        return new Config();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function runtimeConfig()
+    {
+        return $this->runtimeConfig;
     }
 
     /**

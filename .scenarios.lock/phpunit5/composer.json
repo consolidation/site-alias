@@ -23,7 +23,8 @@
         }
     },
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=5.5.0",
+        "consolidation/config": "^1.2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.27",

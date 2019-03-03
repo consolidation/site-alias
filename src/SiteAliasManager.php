@@ -7,7 +7,7 @@ namespace Consolidation\SiteAlias;
 class SiteAliasManager
 {
     protected $aliasLoader;
-    protected $selfAliasRecord;
+    protected $selfSiteAlias;
     protected $specParser;
     protected $root = '';
 
@@ -20,7 +20,7 @@ class SiteAliasManager
     {
         $this->aliasLoader = $aliasLoader ?: new SiteAliasFileLoader();
         $this->specParser = new SiteSpecParser();
-        $this->selfAliasRecord = new AliasRecord();
+        $this->selfSiteAlias = new SiteAlias();
         $this->root = $root;
     }
 
@@ -91,7 +91,7 @@ class SiteAliasManager
      *
      * @param string $name Alias name or site specification
      *
-     * @return AliasRecord|false
+     * @return SiteAlias|false
      */
     public function get($name)
     {
@@ -100,7 +100,7 @@ class SiteAliasManager
         }
 
         if ($this->specParser->validSiteSpec($name)) {
-            return new AliasRecord($this->specParser->parse($name, $this->root), $name);
+            return new SiteAlias($this->specParser->parse($name, $this->root), $name);
         }
 
         return false;
@@ -109,23 +109,23 @@ class SiteAliasManager
     /**
      * Get the '@self' alias record.
      *
-     * @return AliasRecord
+     * @return SiteAlias
      */
     public function getSelf()
     {
-        return $this->selfAliasRecord;
+        return $this->selfSiteAlias;
     }
 
     /**
      * Force-set the current @self alias.
      *
-     * @param AliasRecord $selfAliasRecord
+     * @param SiteAlias $selfSiteAlias
      * @return $this
      */
-    public function setSelf(AliasRecord $selfAliasRecord)
+    public function setSelf(SiteAlias $selfSiteAlias)
     {
-        $this->selfAliasRecord = $selfAliasRecord;
-        $this->setRoot($selfAliasRecord->localRoot());
+        $this->selfSiteAlias = $selfSiteAlias;
+        $this->setRoot($selfSiteAlias->localRoot());
         return $this;
     }
 
@@ -134,7 +134,7 @@ class SiteAliasManager
      *
      * @param string $aliasName alias name
      *
-     * @return AliasRecord
+     * @return SiteAlias
      */
     public function getAlias($aliasName)
     {
@@ -145,7 +145,7 @@ class SiteAliasManager
         }
 
         if ($aliasName->isNone()) {
-            return new AliasRecord([], '@none');
+            return new SiteAlias([], '@none');
         }
 
         // Search through all search locations, load
@@ -162,7 +162,7 @@ class SiteAliasManager
      * then this method will return 'false'.
      *
      * @param string $name Alias name
-     * @return AliasRecord[]|false
+     * @return SiteAlias[]|false
      */
     public function getMultiple($name = '')
     {

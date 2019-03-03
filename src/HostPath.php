@@ -29,7 +29,7 @@ use Webmozart\PathUtil\Path;
  */
 class HostPath
 {
-    /** @var AliasRecord The alias record obtained from the host path */
+    /** @var SiteAlias The alias record obtained from the host path */
     protected $alias_record;
 
     /** @var string The entire original host path (e.g. @alias:/path) */
@@ -44,7 +44,7 @@ class HostPath
     /**
      * HostPath constructor
      *
-     * @param AliasRecord $alias_record The alias record or site specification record
+     * @param SiteAlias $alias_record The alias record or site specification record
      * @param string $original_path The original host path
      * @param string $path Just the 'path' component
      */
@@ -87,7 +87,7 @@ class HostPath
             if (SiteAliasName::isAliasName($parts[0])) {
                 throw new \Exception('Site alias ' . $parts[0] . ' not found.');
             }
-            $alias_record = new AliasRecord(['host' => $parts[0]]);
+            $alias_record = new SiteAlias(['host' => $parts[0]]);
         }
 
         // Create our alias path
@@ -97,11 +97,19 @@ class HostPath
     /**
      * Return the alias record portion of the host path.
      *
-     * @return AliasRecord
+     * @return SiteAlias
+     */
+    public function getSiteAlias()
+    {
+        return $this->alias_record;
+    }
+
+    /**
+     * @deprecated Use getSiteAlias
      */
     public function getAliasRecord()
     {
-        return $this->alias_record;
+        return $this->getSiteAlias();
     }
 
     /**
@@ -257,7 +265,7 @@ class HostPath
      * a host or a path.
      *
      * @param SiteAliasManager $manager
-     * @param AliasRecord|bool $alias_record
+     * @param SiteAlias|bool $alias_record
      * @param string $hostPath
      * @param string $single_part
      */

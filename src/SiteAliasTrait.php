@@ -7,9 +7,9 @@ use Consolidation\Config\Util\ArrayUtil;
 use Consolidation\SiteAlias\Util\FsUtils;
 
 /**
- * Common implementation of some AliasRecord methods.
+ * Common implementation of some SiteAlias methods.
  */
-trait AliasRecordTrait
+trait SiteAliasTrait
 {
     /**
      * @inheritdoc

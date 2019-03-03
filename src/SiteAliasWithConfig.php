@@ -2,9 +2,9 @@
 namespace Consolidation\SiteAlias;
 
 use Consolidation\Config\ConfigInterface;
-use Consolidation\SiteAlias\AliasRecord;
-use Consolidation\SiteAlias\AliasRecordInterface;
-use Consolidation\SiteAlias\AliasRecordTrait;
+use Consolidation\SiteAlias\SiteAlias;
+use Consolidation\SiteAlias\SiteAliasInterface;
+use Consolidation\SiteAlias\SiteAliasTrait;
 
 /**
  * SiteAliasWithConfig delegates to a site alias, and
@@ -13,15 +13,15 @@ use Consolidation\SiteAlias\AliasRecordTrait;
  *   - Runtime config (set on commandline): Options that override site alias contents
  *   - Default config (set from config files): Default options
  */
-class SiteAliasWithConfig implements AliasRecordInterface
+class SiteAliasWithConfig implements SiteAliasInterface
 {
-    use AliasRecordTrait;
+    use SiteAliasTrait;
 
     protected $runtimeConfig;
     protected $siteAlias;
     protected $defaultConfig;
 
-    public function __construct(AliasRecordInterface $siteAlias, ConfigInterface $defaultConfig, ConfigInterface $runtimeConfig)
+    public function __construct(SiteAliasInterface $siteAlias, ConfigInterface $defaultConfig, ConfigInterface $runtimeConfig)
     {
         $this->siteAlias = $siteAlias;
         $this->defaultConfig = $defaultConfig;

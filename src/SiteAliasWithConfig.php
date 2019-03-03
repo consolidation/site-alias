@@ -15,7 +15,7 @@ use Consolidation\SiteAlias\SiteAliasTrait;
  *   - Runtime config (set on commandline): Options that override site alias contents
  *   - Default config (set from config files): Default options
  */
-class SiteAliasWithConfig implements SiteAliasInterface, ConfigRutimeInterface
+class SiteAliasWithConfig implements SiteAliasInterface, ConfigRuntimeInterface
 {
     use SiteAliasTrait;
 

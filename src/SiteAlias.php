@@ -9,11 +9,11 @@ use Consolidation\SiteAlias\Util\FsUtils;
 /**
  * An alias record is a configuration record containing well-known items.
  *
- * @see AliasRecordInterface for documentation
+ * @see SiteAliasInterface for documentation
  */
-class AliasRecord extends Config implements AliasRecordInterface
+class SiteAlias extends Config implements SiteAliasInterface
 {
-    use AliasRecordTrait;
+    use SiteAliasTrait;
 
     /**
      * @var string
@@ -38,14 +38,6 @@ class AliasRecord extends Config implements AliasRecordInterface
     public function name()
     {
         return $this->name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**

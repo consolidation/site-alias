@@ -21,11 +21,11 @@ class SiteAliasWithConfig implements AliasRecordInterface
     protected $siteAlias;
     protected $defaultConfig;
 
-    public function __construct(ConfigInterface $runtimeConfig, AliasRecordInterface $siteAlias, ConfigInterface $defaultConfig)
+    public function __construct(AliasRecordInterface $siteAlias, ConfigInterface $defaultConfig, ConfigInterface $runtimeConfig)
     {
-        $this->runtimeConfig = $runtimeConfig;
         $this->siteAlias = $siteAlias;
         $this->defaultConfig = $defaultConfig;
+        $this->runtimeConfig = $runtimeConfig;
     }
 
     /**
@@ -34,14 +34,6 @@ class SiteAliasWithConfig implements AliasRecordInterface
     public function name()
     {
         return $this->siteAlias->name();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setName($name)
-    {
-        $this->changesProhibited();
     }
 
     /**

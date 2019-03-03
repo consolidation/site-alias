@@ -43,14 +43,6 @@ class AliasRecord extends Config implements AliasRecordInterface
     /**
      * @inheritdoc
      */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function exportConfig()
     {
         return $this->remap($this->export());

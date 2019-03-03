@@ -47,13 +47,6 @@ interface AliasRecordInterface extends ConfigInterface
     public function name();
 
     /**
-     * Remember the name of this record
-     *
-     * @param string $name
-     */
-    public function setName($name);
-
-    /**
      * Determine whether this alias has a root.
      */
     public function hasRoot();

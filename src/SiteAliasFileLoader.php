@@ -28,6 +28,11 @@ class SiteAliasFileLoader
     protected $loader;
 
     /**
+     * @var string
+     */
+    protected $root;
+
+    /**
      * SiteAliasFileLoader constructor
      *
      * @param SiteAliasFileDiscovery|null $discovery
@@ -45,6 +50,14 @@ class SiteAliasFileLoader
     public function setReferenceData($data)
     {
         $this->referenceData = $data;
+    }
+
+    /**
+     * Allow 'self.site.yml' to be applied to any alias record found.
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
     }
 
     /**
@@ -365,7 +378,7 @@ class SiteAliasFileLoader
         if (!$data) {
             return false;
         }
-        $selfSiteAliases = $this->findSelfSiteAliases($data);
+        $selfSiteAliases = $this->findSelfSiteAliases($data, $path);
         $data = array_merge($data, $selfSiteAliases);
         return $data;
     }
@@ -376,16 +389,33 @@ class SiteAliasFileLoader
      * @param array $data
      * @return array
      */
-    protected function findSelfSiteAliases($site_aliases)
+    protected function findSelfSiteAliases($site_aliases, $path)
     {
         foreach ($site_aliases as $site => $data) {
             if (!isset($data['host']) && isset($data['root'])) {
-                foreach (['.', '..'] as $relative_path) {
-                    $candidate = $data['root'] . '/' . $relative_path . '/drush/sites/self.site.yml';
-                    if (file_exists($candidate)) {
-                        return $this->loadData($candidate);
-                    }
+                $data = $this->loadSelfSiteData($data['root']);
+                if (!empty($data)) {
+                    return $data;
                 }
+            }
+        }
+
+        return $this->loadSelfSiteData($this->root);
+    }
+
+    /**
+     * Check to see if there is a 'drush/sites/self.site.yml' file at
+     * the provided root, or one directory up from there.
+     */
+    protected function loadSelfSiteData($root)
+    {
+        if (!$root) {
+            return [];
+        }
+        foreach (['.', '..'] as $relative_path) {
+            $candidate = $root . '/' . $relative_path . '/drush/sites/self.site.yml';
+            if (file_exists($candidate)) {
+                return $this->loadData($candidate);
             }
         }
         return [];

@@ -21,7 +21,7 @@ class SiteAliasManager
         $this->aliasLoader = $aliasLoader ?: new SiteAliasFileLoader();
         $this->specParser = new SiteSpecParser();
         $this->selfSiteAlias = new SiteAlias();
-        $this->root = $root;
+        $this->setRoot($root);
     }
 
     /**
@@ -42,6 +42,7 @@ class SiteAliasManager
     public function setRoot($root)
     {
         $this->root = $root;
+        $this->aliasLoader->setRoot($root);
         return $this;
     }
 

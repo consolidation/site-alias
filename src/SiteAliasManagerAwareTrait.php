@@ -11,13 +11,13 @@ trait SiteAliasManagerAwareTrait
     /**
      * @inheritdoc
      */
-    public function setSiteAliasManager($siteAliasManager)
+    public function setSiteAliasManager(SiteAliasManagerInterface $siteAliasManager)
     {
         $this->siteAliasManager = $siteAliasManager;
     }
 
     /**
-     * @return SiteAliasManager
+     * @return SiteAliasManagerInterface
      */
     public function siteAliasManager()
     {

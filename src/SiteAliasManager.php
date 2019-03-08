@@ -4,7 +4,7 @@ namespace Consolidation\SiteAlias;
 /**
  * Site Alias manager
  */
-class SiteAliasManager
+class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerInitializationInterface
 {
     protected $aliasLoader;
     protected $selfSiteAlias;

@@ -9,10 +9,10 @@ interface SiteAliasManagerAwareInterface
     /**
      * @param SiteAliasManager $siteAliasManager
      */
-    public function setSiteAliasManager($siteAliasManager);
+    public function setSiteAliasManager(SiteAliasManagerInterface $siteAliasManager);
 
     /**
-     * @return SiteAliasManager
+     * @return SiteAliasManagerInterface
      */
     public function siteAliasManager();
 

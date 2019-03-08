@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.0.0-beta2 2019-03-08
+
+* Add interfaces for the Site Alias Manager (#34)
+
 ### 3.0.0-beta1 2019-03-03
 
 * Rename AliasRecord to SiteAlias for consistency (#32)

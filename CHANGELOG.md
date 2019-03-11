@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.0.0-beta3 2019-03.11
+
+* Make self.site.yml more discoverable. (#33)
+
 ### 3.0.0-beta2 2019-03-08
 
 * Add interfaces for the Site Alias Manager (#34)

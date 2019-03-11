@@ -21,7 +21,7 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
         $this->aliasLoader = $aliasLoader ?: new SiteAliasFileLoader();
         $this->specParser = new SiteSpecParser();
         $this->selfSiteAlias = new SiteAlias();
-        $this->root = $root;
+        $this->setRoot($root);
     }
 
     /**
@@ -42,6 +42,7 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
     public function setRoot($root)
     {
         $this->root = $root;
+        $this->aliasLoader->setRoot($root);
         return $this;
     }
 

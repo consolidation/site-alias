@@ -1,15 +1,9 @@
 # Changelog
 
-### 3.0.0-beta3 2019-03.11
+### 3.0.0 2019-03-12
 
 * Make self.site.yml more discoverable. (#33)
-
-### 3.0.0-beta2 2019-03-08
-
 * Add interfaces for the Site Alias Manager (#34)
-
-### 3.0.0-beta1 2019-03-03
-
 * Rename AliasRecord to SiteAlias for consistency (#32)
 * Add SiteAliasWithConfig class (#31)
 

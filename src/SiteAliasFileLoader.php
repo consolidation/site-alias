@@ -470,7 +470,7 @@ class SiteAliasFileLoader
         $data = $this->adjustIfSingleAlias($data);
         $env = $this->getEnvironmentName($aliasName, $data);
         $env_data = $this->getRequestedEnvData($data, $env);
-        if (!$env_data) {
+        if ($env_data === false) {
             return false;
         }
 

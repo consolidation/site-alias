@@ -63,7 +63,7 @@ dev:
   user: www-data
 ```
 
-### Wildcard environments (Experimental)
+### Wildcard environments
 
 It is also possible to define "wildcard" environments that will match any provided environment name. This is only possible to do in instances where the contents of the wildcard aliases are all the same, except for places where the environment name appears. To substitute the name of the environment into a wildcard domain, use the variable replacement string `${env-name}`. For example, a wildcard alias that will match any multisite in a Drupal site might look something like the following example:
 ```

@@ -5,6 +5,11 @@ use PHPUnit\Framework\TestCase;
 
 class SiteAliasNameTest extends TestCase
 {
+    public function testGetMyPid()
+    {
+        $this->assertEquals('my pid', getmypid());
+    }
+
     public function testSiteAliasName()
     {
         // Test an ambiguous sitename or env alias.

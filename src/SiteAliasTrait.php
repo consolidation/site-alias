@@ -27,7 +27,7 @@ trait SiteAliasTrait
     public function root()
     {
         if (!$this->hasRoot()) {
-            throw new \Exception('Site alias ' . $this->name . ' does not specify a root.');
+            return NULL;
         }
         $root = $this->get('root');
         if ($this->isLocal()) {

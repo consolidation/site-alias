@@ -24,13 +24,12 @@
     },
     "require": {
         "php": ">=5.5.0",
-        "consolidation/config": "^1.2.1"
+        "consolidation/config": "^1.2.1|^2"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.27",
-        "symfony/yaml": "~2.3|^3",
-        "consolidation/Robo": "^1.2.3",
-        "symfony/console": "^2.8|^3|^4",
+        "symfony/yaml": "~2.3|^3|^4.4|^5",
+        "consolidation/robo": "^1.2.3|^2",
         "knplabs/github-api": "^2.7",
         "php-http/guzzle6-adapter": "^1.1",
         "g1a/composer-test-scenarios": "^3",

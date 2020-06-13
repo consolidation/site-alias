@@ -2,7 +2,7 @@ dist: trusty
 language: php
 branches:
   only:
-  - master
+  - main
   - "/^[[:digit:]]+\\.[[:digit:]]+\\.[[:digit:]]+.*$/"
 matrix:
   fast_finish: true

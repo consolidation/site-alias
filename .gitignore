@@ -3,3 +3,4 @@ box.phar
 build
 alias-tool.phar
 vendor/
+.phpunit.result.cache

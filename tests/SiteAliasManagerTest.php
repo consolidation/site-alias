@@ -14,7 +14,7 @@ class SiteAliasManagerTest extends TestCase
     /**
      * Set up for tests
      */
-    public function setUp()
+    public function setUp(): void
     {
         $root = $this->siteDir();
         $referenceData = [];

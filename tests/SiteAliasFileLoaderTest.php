@@ -9,7 +9,7 @@ class SiteAliasFileLoaderTest extends TestCase
     use FixtureFactory;
     use FunctionUtils;
 
-    function setUp()
+    function setUp(): void
     {
         $this->sut = new SiteAliasFileLoader();
 

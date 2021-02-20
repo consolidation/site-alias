@@ -14,7 +14,7 @@ class SiteAliasManagerTest extends TestCase
     /**
      * Set up for tests
      */
-    public function setUp()
+    public function setUp(): void
     {
         $root = $this->siteDir();
         $referenceData = [];
@@ -186,7 +186,7 @@ root: /dup/path/to/single',
     {
         $alias = $this->manager->get($aliasName);
         $actual = $this->renderAlias($alias);
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals(str_replace("\r", '', $expected), $actual);
     }
 
     /**

@@ -186,7 +186,7 @@ root: /dup/path/to/single',
     {
         $alias = $this->manager->get($aliasName);
         $actual = $this->renderAlias($alias);
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals(str_replace("\r", '', $expected), $actual);
     }
 
     /**

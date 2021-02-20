@@ -2,10 +2,9 @@
 
 Manage alias records for local and remote sites.
 
-[![Travis CI](https://travis-ci.org/consolidation/site-alias.svg?branch=main)](https://travis-ci.org/consolidation/site-alias)
-[![Windows CI](https://ci.appveyor.com/api/projects/status/6mp1hxmql85aw7ah?svg=true)](https://ci.appveyor.com/project/greg-1-anderson/site-alias)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/consolidation/site-alias/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/consolidation/site-alias/?branch=main)
-[![Coverage Status](https://coveralls.io/repos/github/consolidation/site-alias/badge.svg?branch=main)](https://coveralls.io/github/consolidation/site-alias?branch=main) 
+[![ci](https://github.com/consolidation/site-alias/workflows/CI/badge.svg)](https://travis-ci.org/consolidation/site-alias)
+[![scrutinizer](https://scrutinizer-ci.com/g/consolidation/site-alias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/consolidation/site-alias/?branch=master)
+[![codecov](https://codecov.io/gh/consolidation/site-alias/branch/main/graph/badge.svg?token=CAaB7ofhxx)](https://codecov.io/gh/consolidation/site-alias)
 [![License](https://img.shields.io/badge/license-MIT-408677.svg)](LICENSE)
 
 ## Overview

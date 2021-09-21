@@ -379,7 +379,7 @@ class SiteAliasFileLoader
             return false;
         }
         $selfSiteAliases = $this->findSelfSiteAliases($data, $path);
-        $data = array_merge($data, $selfSiteAliases);
+        $data = array_merge($selfSiteAliases, $data);
         return $data;
     }
 

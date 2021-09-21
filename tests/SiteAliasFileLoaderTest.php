@@ -157,4 +157,16 @@ class SiteAliasFileLoaderTest extends TestCase
         $aliases = $this->sut->loadLocation('other');
         $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other', implode(',', array_keys($aliases)));
     }
+
+    public function testLoadOverrideSelf()
+    {
+        $this->sut->setRoot($this->fixturesDir() . '/sitealiases/self-override');
+        $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/self-override/drush/sites');
+
+        // Specified site alias data should take precedence of @self data.
+        $name = new SiteAliasName('foo', 'prod');
+        $result = $this->sut->load($name);
+        $this->assertTrue($result instanceof SiteAlias);
+        $this->assertEquals('overridden', $result->get('bar'));
+    }
 }

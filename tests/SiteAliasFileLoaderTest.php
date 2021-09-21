@@ -137,7 +137,9 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $all = $this->sut->loadAll();
-        $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other,@single.alternate,@single.dev,@single.empty,@wild.*,@wild.dev', implode(',', array_keys($all)));
+        $actualKeys = array_keys($all);
+        sort($all);
+        $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other,@single.alternate,@single.dev,@single.empty,@wild.*,@wild.dev', implode(',', $actualKeys));
     }
 
     public function testLoadMultiple()
@@ -155,7 +157,9 @@ class SiteAliasFileLoaderTest extends TestCase
         $this->sut->addSearchLocation($this->fixturesDir() . '/sitealiases/other');
 
         $aliases = $this->sut->loadLocation('other');
-        $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other', implode(',', array_keys($aliases)));
+        $actualKeys = array_keys($aliases);
+        sort($actualKeys);
+        $this->assertEquals('@other.bob.dev,@other.bob.other,@other.fred.dev,@other.fred.other,@other.single.dev,@other.single.other', implode(',', $actualKeys));
     }
 
     public function testLoadOverrideSelf()

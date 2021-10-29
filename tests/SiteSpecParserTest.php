@@ -87,6 +87,7 @@ class SiteSpecParserTest extends TestCase
             [ 'user@server/path/to/drupal#uri!' ],
             [ 'user@server/path/to/drupal##uri' ],
             [ 'user#server/path/to/drupal#uri' ],
+            [ NULL ],
        ];
     }
 

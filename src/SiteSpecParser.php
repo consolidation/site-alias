@@ -57,7 +57,9 @@ class SiteSpecParser
      */
     public function validSiteSpec($spec)
     {
-        $result = $this->match($spec);
+        if ($spec !== NULL) {
+            $result = $this->match($spec);
+        }
         return !empty($result);
     }
 

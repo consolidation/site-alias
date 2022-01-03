@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.3 / 3.1.2 2022-1-3
+
+* PHP 8.1 support
+
 ### 3.1.1 2021-09-20
 
 * Favor requested data over @self alias (#42)

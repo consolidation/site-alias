@@ -26,8 +26,12 @@ class SiteAliasFileDiscovery
     protected $locationFilter;
     protected $depth;
 
-    public function __construct($searchLocations = [], $depth = '<= 1', $locationFilter = '')
+    public function __construct($searchLocations = [], $depth = '<= 1', $locationFilter = null)
     {
+        // TODO: Change the default parameter value from 'null' to an empty string
+        if ($locationFilter === null) {
+            $locationFilter = '';
+        }
         $this->locationFilter = $locationFilter;
         $this->searchLocations = $searchLocations;
         $this->depth = $depth;

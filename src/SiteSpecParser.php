@@ -140,7 +140,7 @@ class SiteSpecParser
      */
     protected function match($spec)
     {
-        if($spec === null) {
+        if ($spec === null) {
             $spec = '';
         }
 

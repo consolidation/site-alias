@@ -1,5 +1,10 @@
 # Changelog
 
+### 4.0.0 2022-10-13
+
+* Create 4.x branch for breaking changes introduced in 3.1.6 so that they may be backed out on the 3.x branch.
+* Drop support for older versions of PHP and Symfony.
+
 ### 3.1.6 2022-10-11
 
 * Remove allow-plugins config; it is unused except in CI scripts

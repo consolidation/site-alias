@@ -4,10 +4,10 @@
 on:
   pull_request:
     branches:
-      - main
+      - 3.x
   push:
     branches:
-      - main
+      - 3.x
 
 name: CI
 

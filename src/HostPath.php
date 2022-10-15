@@ -3,7 +3,7 @@ namespace Consolidation\SiteAlias;
 
 use Consolidation\Config\Config;
 use Consolidation\Config\ConfigInterface;
-use Symfony\Component\Filesystem\Path;
+use Webmozart\PathUtil\Path;
 
 /**
  * A host path is a path on some machine. The machine may be specified

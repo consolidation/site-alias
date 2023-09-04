@@ -25,6 +25,7 @@
     "require": {
         "php": ">=7.4",
         "consolidation/config": "^1.2.1 || ^2",
+        "symfony/event-dispatcher": "^6",
         "symfony/filesystem": "^5.4 || ^6",
         "symfony/finder": "^5 || ^6"
     },

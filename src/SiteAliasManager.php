@@ -1,6 +1,9 @@
 <?php
 namespace Consolidation\SiteAlias;
 
+use Consolidation\SiteAlias\Events\AliasNotFoundEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
 /**
  * Site Alias manager
  */
@@ -10,6 +13,7 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
     protected $selfSiteAlias;
     protected $specParser;
     protected $root = '';
+    protected $dispatcher;
 
     /**
      * Constructor for SiteAliasManager
@@ -21,6 +25,7 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
         $this->aliasLoader = $aliasLoader ?: new SiteAliasFileLoader();
         $this->specParser = new SiteSpecParser();
         $this->selfSiteAlias = new SiteAlias();
+        $this->dispatcher = new EventDispatcher();
         $this->setRoot($root);
     }
 
@@ -97,7 +102,16 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
     public function get($name)
     {
         if (SiteAliasName::isAliasName($name)) {
-            return $this->getAlias($name);
+            $alias =  $this->getAlias($name);
+            if (!$alias) {
+                //TODO, call all registered listeners here - if none of them return an alias, we return false
+                $event = new AliasNotFoundEvent($name);
+                $this->dispatcher->dispatch($event, AliasNotFoundEvent::NAME);
+                if ($event->hasAlias()) {
+                    return $event->getAlias();
+                }
+                return false;
+            }
         }
 
         if ($this->specParser->validSiteSpec($name)) {
@@ -211,5 +225,10 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
     public function listAllFilePaths($location = '')
     {
         return $this->aliasLoader->listAll($location);
+    }
+
+    public function addListener($hook, callable $callback)
+    {
+        $this->dispatcher->addListener($hook, $callback);
     }
 }

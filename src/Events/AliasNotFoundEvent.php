@@ -33,5 +33,4 @@ class AliasNotFoundEvent extends Event
     {
         return $this->alias;
     }
-
 }

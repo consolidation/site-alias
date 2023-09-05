@@ -1,9 +1,12 @@
 <?php
 namespace Consolidation\SiteAlias;
 
+use Consolidation\SiteAlias\Events\AliasNotFoundEvent;
 use Consolidation\SiteAlias\Util\YamlDataFileLoader;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class SiteAliasManagerTest extends TestCase
 {
@@ -160,6 +163,26 @@ root: /dup/path/to/single',
         sort($allNames);
 
         $this->assertEquals('@other.single.dev,@other.single.other', implode(',', $allNames));
+    }
+
+    /**
+     * This tests registering a custom site alias resolver when sites are not found using the standard resolution methods
+     *
+     */
+    public function testEventListener()
+    {
+        /* @var SiteAlias $alias */
+        $alias = $this->manager->get('@nonexistent.me');
+        $this->assertFalse($alias, false);
+        $this->manager->addListener(
+            AliasNotFoundEvent::NAME,
+            function (AliasNotFoundEvent $event) {
+                $event->setAlias(new SiteAlias(['test' => 'isset']));
+            }
+        );
+
+        $alias = $this->manager->get('@nonexistent.site');
+        $this->assertEquals('isset', $alias->get('test'));
     }
 
     /**

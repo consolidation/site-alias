@@ -104,14 +104,13 @@ class SiteAliasManager implements SiteAliasManagerInterface, SiteAliasManagerIni
         if (SiteAliasName::isAliasName($name)) {
             $alias =  $this->getAlias($name);
             if (!$alias) {
-                //TODO, call all registered listeners here - if none of them return an alias, we return false
                 $event = new AliasNotFoundEvent($name);
                 $this->dispatcher->dispatch($event, AliasNotFoundEvent::NAME);
                 if ($event->hasAlias()) {
                     return $event->getAlias();
                 }
-                return false;
             }
+            return $alias;
         }
 
         if ($this->specParser->validSiteSpec($name)) {

@@ -90,6 +90,9 @@ jobs:
         php-ini-values:
           - assert.exception=1, zend.assertions=1
 
+        dependencies:
+          - highest
+
         include:
           - os: ubuntu-latest
             php-version: "7.4"

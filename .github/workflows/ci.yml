@@ -153,7 +153,7 @@ jobs:
         if: matrix.dependencies == 'locked'
         run: |
           composer install --no-ansi --no-interaction --no-progress
-          composer update --no-ansi --no-interaction --no-progress phpunit/phpunit --with-all-dependencies
+#          composer update --no-ansi --no-interaction --no-progress phpunit/phpunit --with-all-dependencies
 
       - name: Install lowest dependencies with composer
         if: matrix.dependencies == 'lowest'

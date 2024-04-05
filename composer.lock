@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "206e29b8471b6556bb7d9b07e394aab9",
+    "content-hash": "d83ac2f3ba7728e665264e0cd98c17c5",
     "packages": [
         {
             "name": "consolidation/config",
@@ -4256,7 +4256,7 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.4"
+        "php": "8.3"
     },
     "plugin-api-version": "2.6.0"
 }

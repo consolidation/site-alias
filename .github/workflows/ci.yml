@@ -24,7 +24,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.2
           coverage: none
 
       - name: Install dependencies
@@ -85,13 +85,13 @@ jobs:
           - windows-latest
 
         php-version:
-          - "8.3"
+          - "8.2"
 
         php-ini-values:
           - assert.exception=1, zend.assertions=1
 
         dependencies:
-          - highest
+          - locked
 
         include:
           - os: ubuntu-latest
@@ -99,7 +99,7 @@ jobs:
             dependencies: lowest
 
           - os: ubuntu-latest
-            php-version: "8.3"
+            php-version: "7.4"
             dependencies: highest
 
           - os: ubuntu-latest

@@ -141,8 +141,8 @@ jobs:
       - name: Make sure composer.json is valid before we start modifyig it
         run: composer validate
 
-      - name: Set platform php configuration
-        run: composer config platform.php ${{ matrix.php-version }} && composer config --unset platform.php
+      - name: Clear platform php configuration
+        run: composer config --unset platform.php
 
       - name: Update phpunit if dependencies are locked in case phpunit version in lock file is not compatible
         if: matrix.dependencies == 'locked'

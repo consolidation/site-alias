@@ -22,12 +22,6 @@
             "Consolidation\\SiteAlias\\": "tests/src"
         }
     },
-    "repositories": {
-        "sf7_config": {
-            "type": "vcs",
-            "url": "https://github.com/larowlan/config"
-        }
-    },
     "require": {
         "php": ">=7.4",
         "consolidation/config": "^1.2.1 || ^2 || ^3",

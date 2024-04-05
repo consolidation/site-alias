@@ -24,7 +24,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.3
           coverage: none
 
       - name: Install dependencies
@@ -96,11 +96,11 @@ jobs:
             dependencies: lowest
 
           - os: ubuntu-latest
-            php-version: "7.4"
+            php-version: "8.3"
             dependencies: highest
 
           - os: ubuntu-latest
-            php-version: "8.0"
+            php-version: "8.3"
             dependencies: highest
             php-ini-values: assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=4096M, opcache.jit=1205
 

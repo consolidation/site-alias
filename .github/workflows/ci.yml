@@ -24,7 +24,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.2
           coverage: none
 
       - name: Install dependencies
@@ -56,6 +56,9 @@ jobs:
           php-version: 8.1
           coverage: none
           extensions: intl
+        # https://github.com/composer/composer/issues/9084#issuecomment-752134788https://github.com/composer/composer/issues/9084#issuecomment-752134788
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install roave/backward-compatibility-check
         run: |
@@ -82,7 +85,7 @@ jobs:
           - windows-latest
 
         php-version:
-          - "7.4"
+          - "8.2"
 
         php-ini-values:
           - assert.exception=1, zend.assertions=1
@@ -100,12 +103,7 @@ jobs:
             dependencies: highest
 
           - os: ubuntu-latest
-            php-version: "8.0"
-            dependencies: highest
-            php-ini-values: assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=4096M, opcache.jit=1205
-
-          - os: ubuntu-latest
-            php-version: "8.1"
+            php-version: "8.3"
             dependencies: highest
             php-ini-values: assert.exception=1, zend.assertions=1, opcache.enable=1, opcache.enable_cli=1, opcache.optimization_level=-1, opcache.jit_buffer_size=4096M, opcache.jit=1205
 
@@ -120,6 +118,9 @@ jobs:
           coverage: pcov
           extensions: ${{ env.PHP_EXTENSIONS }}
           ini-values: ${{ matrix.php-ini-values }}
+        # https://github.com/composer/composer/issues/9084#issuecomment-752134788https://github.com/composer/composer/issues/9084#issuecomment-752134788
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Determine composer cache directory on Linux
         if: matrix.os == 'ubuntu-latest'
@@ -139,15 +140,15 @@ jobs:
 
       - name: Make sure composer.json is valid before we start modifyig it
         run: composer validate
-        
-      - name: Clear platform php configuration in case we need to update phpunit
+
+      - name: Clear platform php configuration
         run: composer config --unset platform.php
 
       - name: Update phpunit if dependencies are locked in case phpunit version in lock file is not compatible
         if: matrix.dependencies == 'locked'
         run: |
           composer install --no-ansi --no-interaction --no-progress
-          composer update --no-ansi --no-interaction --no-progress phpunit/phpunit --with-all-dependencies
+#          composer update --no-ansi --no-interaction --no-progress phpunit/phpunit --with-all-dependencies
 
       - name: Install lowest dependencies with composer
         if: matrix.dependencies == 'lowest'
@@ -159,7 +160,7 @@ jobs:
 
       - name: Run tests with phpunit
         run: composer unit
-      
+
       - name: Publish code coverage to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '8.0'
         run: bash <(curl -s https://codecov.io/bash)

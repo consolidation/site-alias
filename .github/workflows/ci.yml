@@ -147,7 +147,7 @@ jobs:
         run: composer validate
 
       - name: Clear platform php configuration in case we need to update phpunit
-        run: composer config --unset platform.php
+        run: composer config --unset platform.php && composer config platform-check false
 
       - name: Update phpunit if dependencies are locked in case phpunit version in lock file is not compatible
         if: matrix.dependencies == 'locked'

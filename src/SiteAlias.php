@@ -23,7 +23,7 @@ class SiteAlias extends Config implements SiteAliasInterface
     /**
      * @inheritdoc
      */
-    public function __construct(array $data = null, $name = '', $env = '')
+    public function __construct(?array $data = null, $name = '', $env = '')
     {
         parent::__construct($data);
         if (!empty($env)) {

@@ -36,7 +36,7 @@ class SiteAliasWithConfig implements SiteAliasInterface, ConfigRuntimeInterface
      * @return SiteAlias read-only site alias combined with the runtime
      *   config (overrides the site alias values) and the default config.
      */
-    public static function create(SiteAliasInterface $siteAlias, ConfigInterface $defaultConfig, ConfigInterface $runtimeConfig = null)
+    public static function create(SiteAliasInterface $siteAlias, ConfigInterface $defaultConfig, ?ConfigInterface $runtimeConfig = null)
     {
         $runtimeConfig = static::determineCorrectRuntimeConfig($defaultConfig, $runtimeConfig);
 

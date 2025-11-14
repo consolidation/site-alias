@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.1.2 2025-11-14
+
+* PHP 8.5 support
+
 ### 4.1.1 2024-12-13 
 
 * PHP 8.4 support

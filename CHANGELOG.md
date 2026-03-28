@@ -1,5 +1,10 @@
 # Changelog
 
+### 4.1.3 2026-03-28
+
+* Allow Symfony 8 (#77)
+* Add Symfony major version matrix to CI (#78)
+
 ### 4.1.2 2025-11-14
 
 * PHP 8.5 support

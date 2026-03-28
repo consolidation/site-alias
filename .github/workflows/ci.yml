@@ -188,7 +188,7 @@ jobs:
 
       - name: Require Symfony ${{ matrix.symfony }}
         if: matrix.symfony != ''
-        run: composer require --no-interaction --no-progress symfony/filesystem:^${{ matrix.symfony }} symfony/finder:^${{ matrix.symfony }} symfony/var-dumper:^${{ matrix.symfony }}
+        run: composer require --no-interaction --no-progress --with-all-dependencies symfony/filesystem:^${{ matrix.symfony }} symfony/finder:^${{ matrix.symfony }} symfony/var-dumper:^${{ matrix.symfony }}
 
       - name: Run tests with phpunit
         run: composer unit
